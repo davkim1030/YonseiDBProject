@@ -163,14 +163,14 @@
 	}
 	%>
 	<form method="POST" action="edit.jsp">
-		<input type="hidden" name="type" value="<% out.print(request.getParameter("type")); %>">
-		<input type="hidden" name="id" value= "<% out.print(request.getParameter("id")); %>">
+		<input type="hidden" name="type" value="<%= request.getParameter("type") %>">
+		<input type="hidden" name="id" value= "<%= request.getParameter("id") %>">
 		<input type="submit" value="수정">
 	</form>
 	
-	<form method="POST" action="delete.jsp">
-		<input type="hidden" name="type" value="<% out.print(request.getParameter("type")); %>">
-		<input type="hidden" name="id" value= "<% out.print(request.getParameter("id")); %>">
+	<form method="GET" action="delete_action.jsp">
+		<input type="hidden" name="type" value="<%= request.getParameter("type") %>">
+		<input type="hidden" name="id" value="<%= request.getParameter("id") %>">
 		<input type="submit" value="삭제">
 	</form>
 </body>

@@ -1,6 +1,6 @@
 <%@page import="java.sql.*" %>
 <%@page import="dbPackage.*" %>
-<%@page import="java.net.URLEncoder" %>
+<%@page import="java.net.*" %>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,15 +15,15 @@
 	DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt();
 	ResultSet rs;
-	request.setCharacterEncoding("UTF-8");
-	String prevId = URLEncoder.encode(request.getParameter("prev_id"), "UTF-8");
-	String type = URLEncoder.encode(request.getParameter("type"), "UTF-8");
+	String prevId = request.getParameter("id");
+	String type = request.getParameter("type");
+	//.decode(request.getParameter("type"), "UTF-8");
 
 	try{
 		if(type.equals("용사")) {
 			stmt.execute("UPDATE 아이템 "
 					+ "SET 용사ID=null "
-					+ "WHERE 용사ID='" + prevId +"'");
+					+ "WHERE 용사ID='" + prevId + "'");
 		} else if(type.equals("스킬")) {
 			stmt.execute("UPDATE 용사"
 					+ "SET 스킬=null "
@@ -51,12 +51,15 @@
 				+ " WHERE " + rs.getMetaData().getColumnName(1) + "=" + prevId);
 		stmt.execute("COMMIT");
 	} catch(Exception e){
-		
+		rs = stmt.executeQuery("SELECT * FROM " + type);
+		out.print(type + " : " + prevId + " : " + rs.getMetaData().getColumnName(1));
+		out.print(e);
 	}
 
 	response.sendRedirect("search.jsp?type=" + type);
 	
-	
+	request.setCharacterEncoding("UTF-8");
+		
 %>
 
 </body>
