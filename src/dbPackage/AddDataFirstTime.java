@@ -22,9 +22,9 @@ public class AddDataFirstTime {
 		System.out.println(id.addItem("후르츠대거", "칼", 8000, 0, 2, 1, "0000001"));
 		System.out.println(id.addItem("래인보우", "활", 4300, 0, 1, 5, "0000002"));
 		System.out.println(id.addItem("가시갑옷", "갑옷", 100, 2000, 3, 5, "0000003"));
-		System.out.println(id.addAbandonGeneral("남재희", 943, 1011, 2022, 3033, "오크"));
-		System.out.println(id.addAbandonGeneral("송명호", 876, 51, 72, 933, "인간"));
-		System.out.println(id.addAbandonGeneral("이원준", 2331, 34, 9022, 33, "엘프"));
+		System.out.println(id.addAbandonGeneral("남재희", 943, 1011, 2022, 4032, 3033, "오크"));
+		System.out.println(id.addAbandonGeneral("송명호", 876, 51, 72, 1123, 933, "인간"));
+		System.out.println(id.addAbandonGeneral("이원준", 2331, 34, 9022, 23, 33, "엘프"));
 		System.out.println(id.addAbandonCorps("칠성", 17003, 41141, 53633, 1242, 4235));
 		System.out.println(id.addAbandonCorps("노도", 22052, 51632, 32536, 5633, 2321));
 		System.out.println(id.addAbandonCorps("이기자", 12604, 85347, 85452, 4353, 1533));

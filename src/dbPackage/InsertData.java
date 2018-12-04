@@ -176,16 +176,17 @@ public class InsertData {
      * int age : 나이 int
      * int corpsAtkCorr : 군단공격력보정 numeric(10,2)
      * int corpsDefCorr : 군단방어력보정 numeric(10,2)
+     * int corpsSpeedCorr : 군단이동력보정 numeric(10,2)
      * int corpsMoraleCorr : 군단사기보정 numeric(10,2)
      * String nemesis : 천적종족 char(15)
      */
-    public String addAbandonGeneral(String name, int age, int corpsAtkCorr,
-                             int corpsDefCorr, int corpsMoraleCorr, String nemesis) {
+    public String addAbandonGeneral(String name, int age, int corpsAtkCorr, int corpsDefCorr, 
+                             int corpsSpeedCorr, int corpsMoraleCorr, String nemesis) {
         try {
             stmt.execute("INSERT INTO 마물장군 VALUES('" + name + "', " +
                     String.valueOf(age) + ", " + String.valueOf(corpsAtkCorr) + ", " +
-                    String.valueOf(corpsDefCorr) + ", " + String.valueOf(corpsMoraleCorr) +
-                    ", '" + nemesis + "')");
+                    String.valueOf(corpsDefCorr) + ", " + String.valueOf(corpsSpeedCorr) + ", " +
+                    String.valueOf(corpsMoraleCorr) + ", '" + nemesis + "')");
         } catch (SQLException e) {
             e.printStackTrace();
             return e.toString();

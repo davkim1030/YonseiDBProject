@@ -61,6 +61,7 @@ public class CreateTable {
 				query = "CREATE TABLE 마물장군 (마물장군이름 varchar(30) primary key, "
 						+ "나이 int not null, "
 						+ "군단공격력보정 int not null, "
+						+ "군단방어력보정 int not null, "
 						+ "군단이동력보정 int not null, "
 						+ "군단사기보정 int not null, "
 						+ "종족명 varchar(30), "
