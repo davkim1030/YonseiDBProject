@@ -38,12 +38,10 @@
 		out.print("<tr>");
 		for(int i = 0; i < 5; i++)
 			out.print("<td>"
-			+ (i!=3 ? rs.getString(rs.getMetaData().getColumnName(i + 1).toString())
-					: rs.getInt(rs.getMetaData().getColumnName(i + 1).toString()))
-			+ "</td>");
+			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString()));
 		for(int i = 11; i < 13; i++)
 			out.print("<td>"
-			+ rs.getString(rs.getMetaData().getColumnName(i + 1).toString())
+			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
 			+ "</td>");
 		out.print("</tr>");
 		
@@ -117,56 +115,70 @@
 				+ String.valueOf(rs.getInt("지능")) + "</td> <td>"
 				+ String.valueOf((rs.getInt("지능") + intInc) * intCorr)
 				+ "</td> </tr> </table>");
+		
 	} else if(request.getParameter("type").equals("마물군단")){
-		// TODO : 쿼리부터 아예 다시 다 짜야함
+		int troops, totAtk, totDef, speed, morale,
+			atkCorr = 1, defCorr = 1, spdCorr = 1, moraleCorr = 1;
+		
+		rs = stmt.executeQuery("SELECT * FROM 마물군단"
+			+ " WHERE 마물군단이름='" + request.getParameter("id") + "'");
+		rs.next();
+		out.print("<table border=\"1\">");
+		// 애트리뷰트 개수에 맞게 table head 지정
+		for(int i = 0; i < 6; i++)
+			out.print("<th>"
+			+ rs.getMetaData().getColumnName(i + 1).toString()
+			+ "</th>");
+		
+		// 테이블 내용 채우기
+		out.print("<tr>");
+		for(int i = 0; i < 6; i++)
+			out.print("<td>"
+			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
+			+ "</td>");
+		out.print("</tr></table><br>");
+		
 		
 		// 보정값을 가져오기위한 쿼리문
-		rs = stmt.executeQuery("SELECT 병력수, 총공격력, 군단공격력보정 "
-				+ "FROM 마물군단 NATURAL JOIN 지휘관, 마물장군 "
+		rs = stmt.executeQuery("SELECT 마물장군이름 FROM 지휘관 "
 				+ "WHERE 마물군단이름='" + request.getParameter("id") +"'");
+
+		// rs.next()가 SQLException을 뱉어서 예외처리
+		try{
+			while(rs.next()){
+				ResultSet tmpRs = stmt.executeQuery("SELECT 군단공격력보정, 군단방어력보정, 군단이동력보정, 군단사기보정 "
+						+ "FROM 마물장군 WHERE 마물장군이름='" + rs.getString("마물장군이름") + "'");
+				tmpRs.next();
+				atkCorr *= tmpRs.getInt("군단공격력보정");
+				defCorr *= tmpRs.getInt("군단방어력보정");
+				spdCorr *= tmpRs.getInt("군단이동력보정");
+				moraleCorr *= tmpRs.getInt("군단사기보정");
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		rs = stmt.executeQuery("SELECT 병력수, 총공격력, 총방어력, 이동력, 사기 "
+				+ "FROM 마물군단 WHERE 마물군단이름='" + request.getParameter("id") +"'");
+		rs.next();
+		totAtk = rs.getInt("총공격력"); totDef = rs.getInt("총방어력");
+		speed = rs.getInt("이동력"); morale = rs.getInt("사기");
+		troops = rs.getInt("병력수");
 		
 		out.print("<table border=\"1\">"
 				+ "<th>분류</th> <th>초기값</th> <th>보정값</th>");
-		out.print("<tr><td>총공격력</td> <td>"
-				+ String.valueOf(rs.getInt("총공격력")) + "</td> <td>");
-		int atkSum = 1;
-			while(rs.next()){
-				atkSum *= rs.getInt("군단공격력보정");
-			}
-		out.print(String.valueOf(rs.getInt("총공격력") * atkSum) + "</td> </tr>");
-		
-		rs = stmt.executeQuery("SELECT 병력수, 총방어력, 군단이동력보정 "
-				+ "FROM 마물군단 NATURAL JOIN 지휘관, 마물장군 "
-				+ "WHERE 마물군단이름='" + request.getParameter("id") +"'");
+		out.print("<tr><td>총공격력</td><td>"
+				+ String.valueOf(totAtk) + "</td><td>" 
+				+ String.valueOf(totAtk * atkCorr) + "</td><tr>");
 		out.print("<tr><td>총방어력</td> <td>"
-				+ String.valueOf(rs.getInt("총방어력")) + "</td> <td>");
-		atkSum = 1;
-			while(rs.next()){
-				atkSum *= rs.getInt("군단방어력보정");
-			}
-		out.print(String.valueOf(rs.getInt("총방어력") * atkSum) + "</td> </tr>");
-		
-		rs = stmt.executeQuery("SELECT 병력수, 이동력, 군단이동력보정"
-				+ "FROM 마물군단 NATURAL JOIN 지휘관, 마물장군 "
-				+ "WHERE 마물군단이름='" + request.getParameter("id") +"'");
-		out.print("<tr><td>총공격력</td> <td>"
-				+ String.valueOf(rs.getInt("이동력")) + "</td> <td>");
-		atkSum = 1;
-			while(rs.next()){
-				atkSum *= rs.getInt("군단이동력보정");
-			}
-		out.print(String.valueOf(rs.getInt("이동력") * atkSum) + "</td> </tr>");
-		
-		rs = stmt.executeQuery("SELECT 사기 , 군단사기보정 "
-				+ "FROM 마물군단 NATURAL JOIN 지휘관, 마물장군 "
-				+ "WHERE 마물군단이름='" + request.getParameter("id") +"'");
+				+ String.valueOf(totDef) + "</td> <td>");
+		out.print(String.valueOf(totDef * defCorr) + "</td> </tr>");
+		out.print("<tr><td>이동력</td> <td>"
+				+ String.valueOf(speed) + "</td> <td>");
+		out.print(String.valueOf(speed * spdCorr) + "</td> </tr>");
 		out.print("<tr><td>사기</td> <td>"
-				+ String.valueOf(rs.getInt("군단사기보정")) + "</td> <td>");
-		atkSum = 1;
-			while(rs.next()){
-				atkSum *= rs.getInt("군단사기보정");
-			}
-		out.print(String.valueOf(rs.getInt("사기") * atkSum) + "</td> </tr> </table>");
+				+ String.valueOf(morale) + "</td> <td>");
+		out.print(String.valueOf(morale * moraleCorr) + "</td> </tr> </table>");
 		
 	} else {
 		out.print("<table border=\"1\">");

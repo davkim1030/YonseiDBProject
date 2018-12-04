@@ -20,6 +20,7 @@
 	//.decode(request.getParameter("type"), "UTF-8");
 
 	try{
+		// 각 타입에 따라 FK 때문에 선행되어야할 쿼리문들 먼저 실행
 		if(type.equals("용사")) {
 			stmt.execute("UPDATE 아이템 "
 					+ "SET 용사ID=null "
@@ -41,10 +42,11 @@
 		} else if(type.equals("마물장군")) {
 			stmt.execute("DELETE FROM 지휘관 "
 					+ "WHERE 마물장군이름='" + prevId +"'");
-		} else {
+		} else { // 404 page not found
 			out.print("예외처리 필요");
 		}
 		
+		// 실제 데이터를 삭제할 쿼리문
 		rs = stmt.executeQuery("SELECT * FROM " + type);
 		// prevId와 같은 primary key를 갖는 레코드를 해당 테이블에서 삭제
 		stmt.execute("DELETE FROM " + type
