@@ -81,6 +81,7 @@
 			"<br>스킬 : " + skill + 
 			"<br>종족 : " + tribe);
 	
+	response.sendRedirect("search.jsp?type=용사");
 	
 %>
 
