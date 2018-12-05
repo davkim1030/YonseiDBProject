@@ -6,18 +6,17 @@
  */
 package dbPackage;
 import java.sql.*;
+import javax.crypto.spec.*;
 
 public class LogInOut {
 	private String userId;		// 유저 id
 	private boolean isLogin;	// 로그인 여부
-	private Connection con;
 	private Statement stmt;
 	private ResultSet rs;
 	
 	public LogInOut(Connection con, Statement stmt) {
 		userId = "";
 		isLogin = false;
-		this.con = con;
 		this.stmt = stmt;
 	}
 	
@@ -31,9 +30,10 @@ public class LogInOut {
 	 * @return		: 성공하면 true, 실패하면 false
 	 */
 	public boolean logIn(String id, String pwd) {
+		PwdEncryption pe = new PwdEncryption();
 		try{
 			rs = stmt.executeQuery("SELECT ID, PASSWORD " +
-					"FROM 관리자 WHERE ID='" + id + "' AND PASSWORD='" + pwd + "'");
+					"FROM 관리자 WHERE ID='" + id + "' AND PASSWORD='" + pe.encrypt(pwd) + "'");
 			if(rs.next()) {
 				isLogin = true;
 				return true;
@@ -47,5 +47,6 @@ public class LogInOut {
 			return false;
 		}
 	}
+	
 
 }
