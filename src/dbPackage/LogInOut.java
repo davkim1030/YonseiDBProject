@@ -13,11 +13,12 @@ public class LogInOut {
 	private boolean isLogin;	// 로그인 여부
 	private Statement stmt;
 	private ResultSet rs;
-	
+	PwdEncryption pe;
 	public LogInOut(Connection con, Statement stmt) {
 		userId = "";
 		isLogin = false;
 		this.stmt = stmt;
+		pe = new PwdEncryption();
 	}
 	
 	public String getUserId() { return userId; }
@@ -30,10 +31,11 @@ public class LogInOut {
 	 * @return		: 성공하면 true, 실패하면 false
 	 */
 	public boolean logIn(String id, String pwd) {
-		PwdEncryption pe = new PwdEncryption();
+
 		try{
 			rs = stmt.executeQuery("SELECT ID, PASSWORD " +
 					"FROM 관리자 WHERE ID='" + id + "' AND PASSWORD='" + pe.encrypt(pwd) + "'");
+			System.out.println(pe.encrypt(pwd));
 			if(rs.next()) {
 				isLogin = true;
 				return true;
@@ -42,8 +44,8 @@ public class LogInOut {
 				isLogin = false;
 				return false;
 			}				
-		} catch(Exception sqle){
-			System.out.println(sqle.toString());
+		} catch(Exception e){
+			e.printStackTrace();;
 			return false;
 		}
 	}

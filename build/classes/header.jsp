@@ -6,16 +6,14 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	<a href="main.jsp">
-		<img alt="logo" src="images/logo.jpg">
-	</a>
+	<a href="main.jsp"><img alt="logo" src="images/logo.jpg"></a>
 	
 	<%
 	String log;	// 로그인인지 로그아웃인지 넣어줄 string 값
 	try{
 		// 로그인 돼 있으면 id 출력 부분
 		if(session.getAttribute("id")!=null){
-			out.print(session.getAttribute("id") + " | ");
+			out.print("<br>" + session.getAttribute("id") + " | ");
 			log = "로그아웃";
 		} // 로그인 안 돼 있으면 출력할 부분
 		else

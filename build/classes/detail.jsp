@@ -40,9 +40,12 @@
 			out.print("<td>"
 			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString()));
 		for(int i = 11; i < 13; i++)
-			out.print("<td>"
+			out.print("<td><a href=\"detail.jsp?type="
+			+ rs.getMetaData().getColumnName(i + 1) + "&id="
 			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
-			+ "</td>");
+			+ "\">"
+			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
+			+ "</a></td>");
 		out.print("</tr>");
 		
 		int atkInc = 0, defInc = 0, hpInc = 0, mpInc = 0, powInc = 0, intInc = 0,
@@ -180,7 +183,61 @@
 				+ String.valueOf(morale) + "</td> <td>");
 		out.print(String.valueOf(morale * moraleCorr) + "</td> </tr> </table>");
 		
-	} else {
+	} else if(request.getParameter("type").equals("아이템")) { // 아이템
+		out.print("<table border=\"1\">");
+		
+		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type"));
+		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type")
+		 + " WHERE " + rs.getMetaData().getColumnName(1).toString()
+		 + "='" + request.getParameter("id") + "'");
+		rs.next();
+		
+		// 애트리뷰트 개수에 맞게 table head 지정
+		for(int i = 0; i < rs.getMetaData().getColumnCount(); i++)
+			out.print("<th>"
+			+ rs.getMetaData().getColumnName(i + 1).toString()
+			+ "</th>");
+		out.print("<tr>");
+		for(int i = 0; i < rs.getMetaData().getColumnCount() - 1; i++)
+			out.print("<td>"
+					+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString()).toString()
+					+ "</td>");
+		// FK 애트리뷰트에 링크 적용
+		out.print("<td><a href=\"detail.jsp?type=용사" + "&id="
+				+ rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())
+				+ "\">"
+				+ rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())
+				+ "</a></td>");
+		out.print("</tr></table>");
+
+	} else if(request.getParameter("type").equals("마물장군")) { // 마물장군
+		out.print("<table border=\"1\">");
+		
+		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type"));
+		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type")
+		 + " WHERE " + rs.getMetaData().getColumnName(1).toString()
+		 + "='" + request.getParameter("id") + "'");
+		rs.next();
+		
+		// 애트리뷰트 개수에 맞게 table head 지정
+		for(int i = 0; i < rs.getMetaData().getColumnCount(); i++)
+			out.print("<th>"
+			+ rs.getMetaData().getColumnName(i + 1).toString()
+			+ "</th>");
+		out.print("<tr>");
+		for(int i = 0; i < rs.getMetaData().getColumnCount() - 1; i++)
+			out.print("<td>"
+					+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString()).toString()
+					+ "</td>");
+		// FK 애트리뷰트에 링크 적용
+		out.print("<td><a href=\"detail.jsp?type=종족" + "&id="
+				+ rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())
+				+ "\">"
+				+ rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())
+				+ "</a></td>");
+		out.print("</tr></table>");
+
+	} else { // FK가 없는 스킬, 종족 페이지에서만 프린트
 		out.print("<table border=\"1\">");
 		
 		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type"));
