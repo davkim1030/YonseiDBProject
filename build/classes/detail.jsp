@@ -96,28 +96,40 @@
 				+ "<th>분류</th> <th>초기값</th> <th>보정값</th>");
 		out.print("<tr><td>공격력</td> <td>"
 				+ String.valueOf(rs.getInt("공격력")) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=공격력\">"
 				+ String.valueOf((rs.getInt("공격력") + atkInc) * atkCorr)
-				+ "</td> </tr>");
+				+ "</a></td> </tr>");
 		out.print("<tr><td>방어력</td> <td>"
 				+ String.valueOf(rs.getInt("방어력")) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=방어력\">"
 				+ String.valueOf((rs.getInt("방어력") + defInc) * defCorr)
-				+ "</td> </tr>");
+				+ "</a></td> </tr>");
 		out.print("<tr><td>체력</td> <td>"
 				+ String.valueOf(rs.getInt("체력")) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=체력\">"
 				+ String.valueOf((rs.getInt("체력") + hpInc) * hpCorr)
-				+ "</td> </tr>");
+				+ "</a></td> </tr>");
 		out.print("<tr><td>마력</td> <td>"
 				+ String.valueOf(rs.getInt("마력")) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=마력\">"
 				+ String.valueOf((rs.getInt("마력") + mpInc) * mpCorr)
-				+ "</td> </tr>");
+				+ "</a></td> </tr>");
 		out.print("<tr><td>힘</td> <td>"
 				+ String.valueOf(rs.getInt("힘")) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=힘\">"
 				+ String.valueOf((rs.getInt("힘") + powInc) * powCorr)
-				+ "</td> </tr>");
+				+ "</a></td> </tr>");
 		out.print("<tr><td>지능</td> <td>"
 				+ String.valueOf(rs.getInt("지능")) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=지능\">"
 				+ String.valueOf((rs.getInt("지능") + intInc) * intCorr)
-				+ "</td> </tr> </table>");
+				+ "</a></td> </tr> </table>");
 		
 	} else if(request.getParameter("type").equals("마물군단")){
 		int troops, totAtk, totDef, speed, morale,
@@ -172,16 +184,24 @@
 				+ "<th>분류</th> <th>초기값</th> <th>보정값</th>");
 		out.print("<tr><td>총공격력</td><td>"
 				+ String.valueOf(totAtk) + "</td><td>" 
-				+ String.valueOf(totAtk * atkCorr) + "</td><tr>");
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=총공격력\">"
+				+ String.valueOf(totAtk * atkCorr) + "</a></td><tr>");
 		out.print("<tr><td>총방어력</td> <td>"
-				+ String.valueOf(totDef) + "</td> <td>");
-		out.print(String.valueOf(totDef * defCorr) + "</td> </tr>");
+				+ String.valueOf(totDef) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=총방어력\">");
+		out.print(String.valueOf(totDef * defCorr) + "</a></td> </tr>");
 		out.print("<tr><td>이동력</td> <td>"
-				+ String.valueOf(speed) + "</td> <td>");
-		out.print(String.valueOf(speed * spdCorr) + "</td> </tr>");
+				+ String.valueOf(speed) + "</td> <td>"
+				+ "<a href=\"calculation.jsp?type=용사&id="
+				+ request.getParameter("id") + "&att=이동력\">");
+		out.print(String.valueOf(speed * spdCorr) + "</a></td> </tr>");
 		out.print("<tr><td>사기</td> <td>"
-				+ String.valueOf(morale) + "</td> <td>");
-		out.print(String.valueOf(morale * moraleCorr) + "</td> </tr> </table>");
+				+ String.valueOf(morale) + "</td> <td>"
+						+ "<a href=\"calculation.jsp?type=용사&id="
+						+ request.getParameter("id") + "&att=사기\">");
+		out.print(String.valueOf(morale * moraleCorr) + "</a></td> </tr> </table>");
 		
 	} else if(request.getParameter("type").equals("아이템")) { // 아이템
 		out.print("<table border=\"1\">");
