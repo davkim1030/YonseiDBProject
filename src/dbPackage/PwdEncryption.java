@@ -2,7 +2,7 @@ package dbPackage;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-class PwdEncryption{
+public class PwdEncryption{
     private static String key;
 
     public PwdEncryption(){

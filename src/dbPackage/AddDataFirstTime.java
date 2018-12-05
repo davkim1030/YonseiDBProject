@@ -10,15 +10,20 @@ public class AddDataFirstTime {
 
 	public AddDataFirstTime(Statement stmt) {
 		InsertData id = new InsertData(stmt);
+		PwdEncryption pe = new PwdEncryption();
 		System.out.println(id.addSkill("블레스", 100, 100));
 		System.out.println(id.addSkill("체력체력", 200, 0));
 		System.out.println(id.addSkill("마나마나", 0, 200));
 		System.out.println(id.addTribe("엘프", 3, 5, 10, 40, 20, 30));
 		System.out.println(id.addTribe("오크", 7, 2, 60, 10, 70, 20));
 		System.out.println(id.addTribe("인간", 6, 5, 45, 35, 55, 65));
-		System.out.println(id.addWarrior("0000001", "010101", "김현욱", 25, "엘리니아", 300, 200, 3400, 2030, 23, 34, "블레스", "인간"));
-		System.out.println(id.addWarrior("0000002", "020202", "박준수", 45, "배드플레이스", 400, 100, 400, 603, 42, 11, "마나마나", "엘프"));
-		System.out.println(id.addWarrior("0000003", "030303", "전도영", 65, "프로스트펑크", 500, 10, 300, 40, 22, 92, "체력체력", "오크"));
+		try {
+		System.out.println(id.addWarrior("0000001", pe.encrypt("010101"), "김현욱", 25, "엘리니아", 300, 200, 3400, 2030, 23, 34, "블레스", "인간"));
+		System.out.println(id.addWarrior("0000002", pe.encrypt("020202"), "박준수", 45, "배드플레이스", 400, 100, 400, 603, 42, 11, "마나마나", "엘프"));
+		System.out.println(id.addWarrior("0000003", pe.encrypt("030303"), "전도영", 65, "프로스트펑크", 500, 10, 300, 40, 22, 92, "체력체력", "오크"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		System.out.println(id.addItem("후르츠대거", "칼", 8000, 0, 2, 1, "0000001"));
 		System.out.println(id.addItem("래인보우", "활", 4300, 0, 1, 5, "0000002"));
 		System.out.println(id.addItem("가시갑옷", "갑옷", 100, 2000, 3, 5, "0000003"));

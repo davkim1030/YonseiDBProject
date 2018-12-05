@@ -1,5 +1,5 @@
 <%@page import="java.sql.*" %>
-<%@page import="dbPackage.DBConnection" %>
+<%@page import="dbPackage.*" %>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +13,7 @@
 	DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt();
 	ResultSet rs;
+	PwdEncryption pe = new PwdEncryption();
 %>
 
 <%
@@ -38,7 +39,7 @@
 	
 	try{
 		stmt.execute("INSERT INTO 용사 VALUES('" + id + "', '"
-				+ pw + "', '"
+				+ pe.encrypt(pw) + "', '"
 				+ name + "', "
 				+ String.valueOf(age) + ", '"
 				+ birthPlace + "', "
@@ -53,7 +54,7 @@
 		stmt.execute("COMMIT");
 	} catch(SQLException sqle){
 		stmt.execute("INSERT INTO 용사 VALUES('" + id + "', '"
-				+ pw + "', '"
+				+ pe.encrypt(pw) + "', '"
 				+ name + "', "
 				+ String.valueOf(age) + ", '"
 				+ birthPlace + "', "
