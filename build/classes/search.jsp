@@ -36,13 +36,17 @@
 		DBConnection dbCon = new DBConnection();
 		Statement stmt = dbCon.getStmt();
 		ResultSet rs;
-		
+		int pageCount;
+		int currPage = Integer.valueOf(request.getParameter("page"));
+		ResultSet rsTmp;
+
 		out.print("<h1>" + type + " 정보 검색</h1>");
 
 		// type 값에 따라 dropdown 버튼 만들기
 	%>
 	<form method="GET" action="search.jsp">
 		<input type="hidden" name="type" value="<% out.print(type); %>">
+		<input type="hidden" name="page" value="1">
 		<select name="column_number">
 		<%
 			// 해당 테이블에서 한 개의 쿼리만 가져오기
@@ -70,11 +74,13 @@
 		// column_number나 search_key가 null 이면 전체 리스트 출력
 		if(request.getParameter("column_number")==null ||
 		request.getParameter("search_key")==null ||
-		request.getParameter("search_key").equals(""))
-			rs = stmt.executeQuery("SELECT * FROM " + type);
+		request.getParameter("search_key").equals("")) {
+			rs = stmt.executeQuery("SELECT * FROM (SELECT T.*, ROWNUM R FROM "
+			+ type + " T) WHERE R>=" + String.valueOf((currPage - 1) * 20 + 1)
+			+ " AND R<=" + String.valueOf(currPage * 20));
 		
 		// column_number나 search_key가 정해지면 해당 값을 기반으로 검색
-		else{
+		} else {
 			String columnName = rs.getMetaData().getColumnName(Integer.valueOf(request.getParameter("column_number")));
 			String searchKey = request.getParameter("search_key");
 			rs.close();
@@ -82,21 +88,27 @@
 			// search_key의 타입이 숫자인 경우와 string일 경우를 나눠서 쿼리문을 작성
 			// int 경우에는 정확하게 같은 값만 검색
 			if(columnName.equals("int")){
-				rs = stmt.executeQuery("SELECT * FROM " + type +
-						" WHERE "+ columnName + "=" + searchKey);
+				rs = stmt.executeQuery("SELECT * FROM (SELECT T.*, ROWNUM R FROM "
+						+ type + " T) WHERE "+ columnName + "=" + searchKey
+						+ " AND R>=" + String.valueOf((currPage - 1) * 20 + 1)
+						+ " AND R<=" + String.valueOf(currPage * 20));
+				
 			} else {	// String의 경우는 포함하는 값까지 모두 검색
-				rs = stmt.executeQuery("SELECT * FROM " + type + " WHERE "
+				rs = stmt.executeQuery("SELECT * FROM (SELECT T.*, ROWNUM R FROM " + type
+						+ " T) WHERE "
 						+ columnName + " LIKE '%" + searchKey + "%' OR "
 						+ columnName + " LIKE '" + searchKey + "%' OR "
 						+ columnName + " LIKE '%" + searchKey + "' OR "
-						+ columnName + "='" + searchKey + "'");
+						+ columnName + "='" + searchKey + "'"
+						+ " AND R>=" + String.valueOf((currPage - 1) * 20 + 1)
+						+ " AND R<=" + String.valueOf(currPage * 20));
 			}
 		}
-		
+
 		// 위에서 지정한 값들을 기반으로 테이블 생성
-		while(rs.next()){
+		for(int i = 0; rs.next() && i < 20; i++){
 			out.print("<tr>");
-			for(int j = 1; j <= rs.getMetaData().getColumnCount(); j++){
+			for(int j = 1; j <= rs.getMetaData().getColumnCount() - 1; j++){
 				out.print("<td>");
 				if(j==1) {	// 첫 번째 어트리뷰트의 경우 링크 추가
 					out.print("<a href=\"detail.jsp?type="
@@ -116,6 +128,51 @@
 		}
 
 		%>
-	</table>
+	</table><br>
+	<%
+		if(request.getParameter("column_number")==null ||
+		request.getParameter("search_key")==null ||
+		request.getParameter("search_key").equals("")) {
+			rs = stmt.executeQuery("SELECT * FROM " + type + " WHERE ROWNUM=1");
+			rs.next();
+			// 전방향 전용 결과를 해제하기 위한 코드
+			Statement stmtTmp = dbCon.getCon().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			rs = stmtTmp.executeQuery("SELECT " + rs.getMetaData().getColumnName(1) + " FROM " + type);
+			rs.last();
+		
+			pageCount = (rs.getRow() / 20) + 1;
+		} else {
+			String columnName = rs.getMetaData().getColumnName(Integer.valueOf(request.getParameter("column_number")));
+			String searchKey = request.getParameter("search_key");
+			rs.close();
+			
+			Statement stmtTmp = dbCon.getCon().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			// search_key의 타입이 숫자인 경우와 string일 경우를 나눠서 쿼리문을 작성
+			// int 경우에는 정확하게 같은 값만 검색
+			if(columnName.equals("int")){
+				rs = stmtTmp.executeQuery("SELECT * FROM " + type +
+						" WHERE "+ columnName + "=" + searchKey);
+			} else {	// String의 경우는 포함하는 값까지 모두 검색
+				rs = stmtTmp.executeQuery("SELECT * FROM (SELECT T.*, ROWNUM R FROM " + type + " T)  WHERE "
+						+ columnName + " LIKE '%" + searchKey + "%' OR "
+						+ columnName + " LIKE '" + searchKey + "%' OR "
+						+ columnName + " LIKE '%" + searchKey + "' OR "
+						+ columnName + "='" + searchKey + "'");
+			}
+			
+			rs.last();
+			
+			pageCount = (rs.getRow() / 20) + 1;
+		}
+
+		for(int i = 1; i <= pageCount; i++){
+			if(i!=currPage)
+				out.print("<a href=\"search.jsp?type=" + type
+				+ "&page=" + String.valueOf(i) + "\">"
+				+ String.valueOf(i) + "</a> ");
+			else
+				out.print(String.valueOf(i) + " ");
+		}
+	%>
 </body>
 </html>

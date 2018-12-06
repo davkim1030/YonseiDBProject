@@ -77,13 +77,13 @@ public class InsertData {
 
         try {
             stmt.execute("INSERT INTO 용사 VALUES('" + ID + "', '" +
-                    PW + "', '" + name + "', " + String.valueOf(age) + ", '" +
+            		new PwdEncryption().encrypt(PW) + "', '" + name + "', " + String.valueOf(age) + ", '" +
                     birthPlace + "', " +
                     String.valueOf(attack) + ", " + String.valueOf(defense) + ", " +
                     String.valueOf(hp) + ", " + String.valueOf(mp) + ", " + 
                     String.valueOf(power) + ", " + String.valueOf(intel) + ", '" +
                     skill + "', '" + tribe + "')");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return e.toString();
         } // try-catch end
@@ -96,12 +96,12 @@ public class InsertData {
                              int hp, int mp, int power, int intel) {
         try {
             stmt.execute("INSERT INTO 용사 VALUES('" + ID + "', '" +
-                    PW + "', '" + name + "', " + String.valueOf(age) + ", '" +
+                    new PwdEncryption().encrypt(PW) + "', '" + name + "', " + String.valueOf(age) + ", '" +
                     birthPlace + "'," +
                     String.valueOf(attack) + ", " + String.valueOf(defense) + ", " +
                     String.valueOf(hp) + ", " + String.valueOf(mp) +
-                    String.valueOf(power) + ", " + String.valueOf(intel) + ")");
-        } catch (SQLException e) {
+                    String.valueOf(power) + ", " + String.valueOf(intel) + ", , )");
+        } catch (Exception e) {
             e.printStackTrace();
             return e.toString();
         } // try-catch end

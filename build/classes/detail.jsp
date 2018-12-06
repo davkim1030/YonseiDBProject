@@ -11,6 +11,13 @@
 		+ " : " + request.getParameter("id") + " 상세 정보"); %></title>
 </head>
 <body>
+	<script type="text/javascript">
+	function popupOpen(type, id, att){
+		var popUrl = "calculation.jsp?type=" + type + "&id=" + id + "&att=" + att;	//팝업창에 출력될 페이지 URL
+		var popOption = "width=720, height=360, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"",popOption);
+		}
+	</script>
 	<jsp:include page="header.jsp"></jsp:include>
 	<% DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt();
@@ -96,38 +103,38 @@
 				+ "<th>분류</th> <th>초기값</th> <th>보정값</th>");
 		out.print("<tr><td>공격력</td> <td>"
 				+ String.valueOf(rs.getInt("공격력")) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=공격력\">"
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '공격력');\">"
 				+ String.valueOf((rs.getInt("공격력") + atkInc) * atkCorr)
 				+ "</a></td> </tr>");
 		out.print("<tr><td>방어력</td> <td>"
 				+ String.valueOf(rs.getInt("방어력")) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=방어력\">"
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '방어력');\">"
 				+ String.valueOf((rs.getInt("방어력") + defInc) * defCorr)
 				+ "</a></td> </tr>");
 		out.print("<tr><td>체력</td> <td>"
 				+ String.valueOf(rs.getInt("체력")) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=체력\">"
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '체력');\">"
 				+ String.valueOf((rs.getInt("체력") + hpInc) * hpCorr)
 				+ "</a></td> </tr>");
 		out.print("<tr><td>마력</td> <td>"
 				+ String.valueOf(rs.getInt("마력")) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=마력\">"
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '마력');\">"
 				+ String.valueOf((rs.getInt("마력") + mpInc) * mpCorr)
 				+ "</a></td> </tr>");
 		out.print("<tr><td>힘</td> <td>"
 				+ String.valueOf(rs.getInt("힘")) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=힘\">"
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '힘');\">"
 				+ String.valueOf((rs.getInt("힘") + powInc) * powCorr)
 				+ "</a></td> </tr>");
 		out.print("<tr><td>지능</td> <td>"
 				+ String.valueOf(rs.getInt("지능")) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=지능\">"
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '지능');\">"
 				+ String.valueOf((rs.getInt("지능") + intInc) * intCorr)
 				+ "</a></td> </tr> </table>");
 		
@@ -184,23 +191,23 @@
 				+ "<th>분류</th> <th>초기값</th> <th>보정값</th>");
 		out.print("<tr><td>총공격력</td><td>"
 				+ String.valueOf(totAtk) + "</td><td>" 
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=총공격력\">"
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '총공격력');\">"
 				+ String.valueOf(totAtk * atkCorr) + "</a></td><tr>");
 		out.print("<tr><td>총방어력</td> <td>"
 				+ String.valueOf(totDef) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=총방어력\">");
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '총방어력');\">");
 		out.print(String.valueOf(totDef * defCorr) + "</a></td> </tr>");
 		out.print("<tr><td>이동력</td> <td>"
 				+ String.valueOf(speed) + "</td> <td>"
-				+ "<a href=\"calculation.jsp?type=용사&id="
-				+ request.getParameter("id") + "&att=이동력\">");
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '이동력');\">");
 		out.print(String.valueOf(speed * spdCorr) + "</a></td> </tr>");
 		out.print("<tr><td>사기</td> <td>"
 				+ String.valueOf(morale) + "</td> <td>"
-						+ "<a href=\"calculation.jsp?type=용사&id="
-						+ request.getParameter("id") + "&att=사기\">");
+				+ "<a href=\"javascript:popupOpen('" + request.getParameter("type")
+				+ "', '" + request.getParameter("id") + "', '사기');\">");
 		out.print(String.valueOf(morale * moraleCorr) + "</a></td> </tr> </table>");
 		
 	} else if(request.getParameter("type").equals("아이템")) { // 아이템

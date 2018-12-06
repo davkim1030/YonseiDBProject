@@ -62,7 +62,7 @@ public class DBConnection {
 			new DBConnection();
 //			dropAllTable(stmt);		// drop all tables 
 //			new CreateTable(stmt);		// create tables for first time
-//			new AddDataFirstTime(stmt);	// inserts initial data
+			new AddDataFirstTime(stmt);	// inserts initial data
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -38,12 +38,12 @@
 		<li><a href="signup.jsp">용사등록</a></li>
 		<li>정보검색
 			<ul>
-				<li><a href="search.jsp?type=용사">용사 정보 검색</a></li>
-				<li><a href="search.jsp?type=스킬">스킬 정보 검색</a></li>
-				<li><a href="search.jsp?type=종족">종족 정보 검색</a></li>
-				<li><a href="search.jsp?type=아이템">아이템 정보 검색</a></li>
-				<li><a href="search.jsp?type=마물군단">마물군단 정보 검색</a></li>
-				<li><a href="search.jsp?type=마물장군">마물장군 정보 검색</a></li>
+				<li><a href="search.jsp?type=용사&page=1">용사 정보 검색</a></li>
+				<li><a href="search.jsp?type=스킬&page=1">스킬 정보 검색</a></li>
+				<li><a href="search.jsp?type=종족&page=1">종족 정보 검색</a></li>
+				<li><a href="search.jsp?type=아이템&page=1">아이템 정보 검색</a></li>
+				<li><a href="search.jsp?type=마물군단&page=1">마물군단 정보 검색</a></li>
+				<li><a href="search.jsp?type=마물장군&page=1">마물장군 정보 검색</a></li>
 			</ul>
 		</li>
 	</ul>
