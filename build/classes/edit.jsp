@@ -125,7 +125,7 @@
 		if(session.getAttribute("id")==null) response.sendRedirect("error.jsp?type=403");
 		else { %>
 			ID : <input type="text" name="id"><br>
-			PASSWORD : <input type="text" name="password"><br>
+			PASSWORD : <input type="password" name="password"><br>
 			<%
 		}
 	} else { // 예외처리 필요

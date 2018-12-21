@@ -1,6 +1,6 @@
 <%@page import="java.sql.*" %>
 <%@page import="dbPackage.*" %>
-<%@page import="java.net.URLEncoder" %>
+<%@page import="java.net.*" %>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,9 +14,12 @@
 	// 디비 객체 선언부
 	DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt();
+	PwdEncryption pe = new PwdEncryption();
 	request.setCharacterEncoding("UTF-8");
-	String prevId = URLEncoder.encode(request.getParameter("prev_id"), "UTF-8");
-	String type = URLEncoder.encode(request.getParameter("type"), "UTF-8");
+	String prevId = request.getParameter("prev_id");
+	String type = request.getParameter("type");
+//	String prevId = URLEncoder.encode(request.getParameter("prev_id"), "UTF-8");
+//	String type = URLEncoder.encode(request.getParameter("type"), "UTF-8");
 	%>
 
 
@@ -38,7 +41,7 @@
 		try{
 			stmt.execute("UPDATE 아이템 SET 용사ID='" + id + "' WHERE 용사ID='" + prevId + "'");
 			stmt.execute("UPDATE 용사 SET 용사ID='" + id + "', password='"
-					+ pw + "', 이름='"
+					+ pe.encrypt(pw) + "', 이름='"
 					+ name + "', 나이="
 					+ age + ", 출생지='"
 					+ birthPlace + "', 공격력="
@@ -76,7 +79,7 @@
 					+ "SET 스킬='" + skillName
 					+ "' WHERE 스킬='" + prevId + "'");
 			stmt.execute("UPDATE " + type +
-					"SET 스킬이름='" + skillName
+					" SET 스킬이름='" + skillName
 					+ ", 체력증가=" + hpInc
 					+ ", 마력증가=" + mpInc
 					+ "WHERE 스킬이름='" + prevId +"'");
@@ -94,13 +97,13 @@
 		String intCorr = request.getParameter("int_corr");
 		try{
 			stmt.execute("UPDATE 용사"
-					+ "SET 종족='" + tribeName
+					+ " SET 종족='" + tribeName
 					+ "' WHERE 종족='" + prevId +"'");
 			stmt.execute("UPDATE 마물장군"
-					+ "SET 천적종족='" + tribeName
+					+ " SET 천적종족='" + tribeName
 					+ "' WHERE 천적종족='" + prevId +"'");
 			stmt.execute("UPDATE 종족"
-					+ "SET 종족명='" + tribeName
+					+ " SET 종족명='" + tribeName
 					+ "', 공격력보정=" + atkCorr
 					+ ", 방어력보정=" + defCorr
 					+ ", 체력보정=" + hpCorr
@@ -122,7 +125,7 @@
 		String warId = request.getParameter("war_id");
 		try{
 			stmt.execute("UPDATE 아이템"
-					+ "SET 아이템이름='" + itemName
+					+ " SET 아이템이름='" + itemName
 					+ "', 종류='" + itemType
 					+ "', 공격력증가=" + atkInc
 					+ ", 방어력증가=" + defInc
@@ -142,10 +145,10 @@
 		String morale = request.getParameter("morale");
 		try{
 			stmt.execute("UPDATE 지휘관"
-					+ "SET 마물군단이름='" + corpsName
+					+ " SET 마물군단이름='" + corpsName
 					+ "' WHERE 마물군단이름='" + prevId +"'");
 			stmt.execute("UPDATE 마물군단"
-					+ "SET 마물군단이름='" + corpsName
+					+ " SET 마물군단이름='" + corpsName
 					+ "', 병력수=" + troopsNumber
 					+ ", 총공격력=" + totAtk
 					+ ", 총방어력=" + totDef
@@ -165,26 +168,38 @@
 		String enemy = request.getParameter("enemy");
 		try{
 			stmt.execute("UPDATE 지휘관"
-					+ "SET 마물장군이름='" + generalName
+					+ " SET 마물장군이름='" + generalName
 					+ "' WHERE 마물장군이름='" + prevId +"'");
 			stmt.execute("UPDATE 마물장군"
-					+ "SET 마물장군이름='" + generalName
+					+ " SET 마물장군이름='" + generalName
 					+ "', 나이=" + age
 					+ ", 군단공격력보정=" + corpsAtkCorr
 					+ ", 군단이동력보정=" + corpsSpeedCorr
 					+ ", 군단사기보정=" + corpsMoraleCorr
-					+ ", 천적종족=" + enemy
+					+ ", 천적종족='" + enemy
 					+ "' WHERE 마물장군이름='" + prevId +"'");
 			stmt.execute("COMMIT");
 		} catch(Exception e){
 			out.print(e);
 		}
-	} else {	// 예외처리 필요
+	} else if(type.equals("관리자")) {
+		String id = URLEncoder.encode(request.getParameter("id"), "UTF-8");
+		String pw = URLEncoder.encode(request.getParameter("password"), "UTF-8");
+		try{
+			stmt.execute("UPDATE 관리자 "
+					+ "SET ID='" + id
+					+ "', PASSWORD='" + pe.encrypt(pw)
+					+ "' WHERE id='" + prevId +"'");
+			stmt.execute("COMMIT");
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}else {	// 예외처리 필요
 		out.print("예외처리 필요");
 	}
 	
 //	out.print(type + " : " + id);
-	response.sendRedirect("detail.jsp?type=" + type
+	response.sendRedirect("detail.jsp?type=" + URLEncoder.encode(type, "UTF-8")
 			+ "&id=" + request.getParameter("id"));
 	
 	

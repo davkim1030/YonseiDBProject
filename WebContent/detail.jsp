@@ -1,5 +1,6 @@
 <%@page import="java.sql.*" %>
 <%@page import="dbPackage.*" %>
+<%@page import="java.net.*" %>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -267,6 +268,27 @@
 				+ "\">"
 				+ rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())
 				+ "</a></td>");
+		out.print("</tr></table>");
+
+	} else if(request.getParameter("type").equals("관리자")) { // 관리자
+		out.print("<table border=\"1\">");
+		
+		rs = stmt.executeQuery("SELECT * FROM " + URLDecoder.decode(request.getParameter("type"), "UTF-8"));
+		rs = stmt.executeQuery("SELECT * FROM " + URLDecoder.decode(request.getParameter("type"), "UTF-8")
+		 + " WHERE " + rs.getMetaData().getColumnName(1).toString()
+		 + "='" + request.getParameter("id") + "'");
+		rs.next();
+		
+		// 애트리뷰트 개수에 맞게 table head 지정
+		for(int i = 0; i < rs.getMetaData().getColumnCount(); i++)
+			out.print("<th>"
+			+ rs.getMetaData().getColumnName(i + 1).toString()
+			+ "</th>");
+		out.print("<tr>");
+		for(int i = 0; i < rs.getMetaData().getColumnCount(); i++)
+			out.print("<td>"
+					+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString()).toString()
+					+ "</td>");
 		out.print("</tr></table>");
 
 	} else { // FK가 없는 스킬, 종족 페이지에서만 프린트
