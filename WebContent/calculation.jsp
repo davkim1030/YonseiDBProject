@@ -11,10 +11,10 @@
 	String type = request.getParameter("type");
 	String id = request.getParameter("id");
 	String att = request.getParameter("att");
-		out.print(type + ":" + id + ":" + att + " 보정값 계산내용"); %></title>
+		out.print(type + " : " + id + " : " + att + " 보정값 계산내용"); %></title>
 </head>
 <body>
-	<h1><% out.print(type + ":" + id + ":" + att + " 보정값 계산내용"); %></h1><br>
+	<h1><% out.print(type + " : " + id + " : " + att + " 보정값 계산내용"); %></h1><br>
 		
 	<table>
 	<%

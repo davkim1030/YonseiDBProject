@@ -35,7 +35,16 @@
 			out.print("<td>" + rs.getInt(rs.getMetaData().getColumnName(i)) + "</td></tr>");
 		}
 	} else if(type.equals("마물군단")) {
+		rs = stmt.executeQuery("SELECT count(마물군단이름) AS 총군단수, sum(병력수) AS 총병력수, "
+				+ " sum(총공격력 * 군단공격력보정) AS 총군단공격력, sum(총방어력 * 군단방어력보정) AS 총군단방어력, "
+				+ " sum(이동력 * 군단이동력보정) AS 총군단이동력, sum(사기 * 군단사기보정) AS 총군단사기 "
+				+ " FROM 마물군단 NATURAL JOIN 지휘관, 마물장군");
+		rs.next();
 		
+		for(int i = 1; i <= rs.getMetaData().getColumnCount(); i++){
+			out.print("<tr><td>" + rs.getMetaData().getColumnName(i) + "</td>");
+			out.print("<td>" + rs.getInt(rs.getMetaData().getColumnName(i)) + "</td></tr>");
+		}
 	} else { // 예외처리 필요
 		response.sendRedirect("error.jsp?type=404");
 	}
