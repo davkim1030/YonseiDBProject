@@ -36,7 +36,14 @@
 		<li><a href="main.jsp">메인</a></li>
 		<li><a href="login.jsp">로그인</a></li>
 		<li><a href="signup.jsp">용사등록</a></li>
-		<% if(log.equals("로그아웃")){out.print("<li><a href=\"signup_admin.jsp\">관리자 등록</a></li>");}%>		<li>정보검색
+		<% if(log.equals("로그아웃")){out.print("<li><a href=\"signup_admin.jsp\">관리자 등록</a></li>");}%>	
+		<li>데이터 통계
+			<ul>
+				<li><a href="statistics.jsp?type=용사">용사 데이터 통계</a></li>
+				<li><a href="statistics.jsp?type=마물군단">마물군단 데이터 통계</a></li>
+			</ul>
+		</li>
+		<li>정보검색
 			<ul>
 				<li><a href="search.jsp?type=용사&page=1">용사 정보 검색</a></li>
 				<li><a href="search.jsp?type=스킬&page=1">스킬 정보 검색</a></li>
