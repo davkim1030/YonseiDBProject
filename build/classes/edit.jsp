@@ -121,8 +121,15 @@
 		%>	
 		</select>
 		<%
+	} else if(type.equals("관리자")) {
+		if(session.getAttribute("id")==null) response.sendRedirect("error.jsp?type=403");
+		else { %>
+			ID : <input type="text" name="id"><br>
+			PASSWORD : <input type="text" name="password"><br>
+			<%
+		}
 	} else { // 예외처리 필요
-		out.print("error");
+		response.sendRedirect("error.jsp?type=404");
 	}
 		%>
 		

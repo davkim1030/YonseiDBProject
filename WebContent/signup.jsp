@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html">
-<title>용사 정보 입력</title>
+<title>용사 등록</title>
 
 </head>
 <%
@@ -29,6 +29,7 @@
 		마력 : <input type="number" name="mp"><br>
 		힘 : <input type="number" name="power"><br>
 		지능 : <input type="number" name="intel"><br>
+		<input type="hidden" name="type" value="war">
 		
 		스킬 : <select name="skill" form="administrate">
 		<%
@@ -51,7 +52,7 @@
 		%>	
 		</select><br>
 		<br>
-		<input type="submit" value="Sign Up">
+		<input type="submit" value="등록">
 		<%
 		rs.close();
 		stmt.close();

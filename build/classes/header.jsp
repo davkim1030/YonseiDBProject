@@ -9,7 +9,7 @@
 	<a href="main.jsp"><img alt="logo" src="images/logo.jpg"></a>
 	
 	<%
-	String log;	// 로그인인지 로그아웃인지 넣어줄 string 값
+	String log;	// 로그인이면 "로그아웃", 로그아웃이면 "로그인" 넣어줄 string 값
 	try{
 		// 로그인 돼 있으면 id 출력 부분
 		if(session.getAttribute("id")!=null){
@@ -36,7 +36,7 @@
 		<li><a href="main.jsp">메인</a></li>
 		<li><a href="login.jsp">로그인</a></li>
 		<li><a href="signup.jsp">용사등록</a></li>
-		<li>정보검색
+		<% if(log.equals("로그아웃")){out.print("<li><a href=\"signup_admin.jsp\">관리자 등록</a></li>");}%>		<li>정보검색
 			<ul>
 				<li><a href="search.jsp?type=용사&page=1">용사 정보 검색</a></li>
 				<li><a href="search.jsp?type=스킬&page=1">스킬 정보 검색</a></li>
@@ -44,6 +44,7 @@
 				<li><a href="search.jsp?type=아이템&page=1">아이템 정보 검색</a></li>
 				<li><a href="search.jsp?type=마물군단&page=1">마물군단 정보 검색</a></li>
 				<li><a href="search.jsp?type=마물장군&page=1">마물장군 정보 검색</a></li>
+				<% if(log.equals("로그아웃")){out.print("<li><a href=\"search.jsp?type=관리자&page=1\">관리자 정보 검색</a></li>");}%>
 			</ul>
 		</li>
 	</ul>

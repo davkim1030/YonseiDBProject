@@ -11,8 +11,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String type;
 	// GET방식으로 보낸 파라메터 type 값에 따라 변수 설정 및 제목 적용
-	if(request.getParameter("type")==null
-			||request.getParameter("type").equals("용사"))
+	if(request.getParameter("type")==null)
 		type = "용사";
 	else if(request.getParameter("type").equals("스킬"))
 		type = "스킬";
@@ -24,9 +23,15 @@
 		type = "마물군단";
 	else if(request.getParameter("type").equals("마물장군"))
 		type = "마물장군";
+	else if(request.getParameter("type").equals("관리자")){
+		type = "관리자";
+		if(session.getAttribute("id")==null){
+			response.sendRedirect("error.jsp?type=403");
+		}		
+	}
 	else{
-		// TODO : 404로 리다이렉트, exception_handler 만들기
 		type = "용사";
+		// TODO : 404로 리다이렉트, exception_handler 만들기
 	}
 	out.print(type); %> 정보 검색</title>
 </head>
@@ -37,7 +42,8 @@
 		Statement stmt = dbCon.getStmt();
 		ResultSet rs;
 		int pageCount;
-		int currPage = Integer.valueOf(request.getParameter("page"));
+		// 페이지가 null 값이면 1로 예외처리
+		int currPage = request.getParameter("page")==null ? 1 : Integer.valueOf(request.getParameter("page"));
 		ResultSet rsTmp;
 
 		out.print("<h1>" + type + " 정보 검색</h1>");

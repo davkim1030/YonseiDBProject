@@ -8,7 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html">
 <title><% request.setCharacterEncoding("UTF-8");
 		out.print(request.getParameter("type")
-		+ " : " + request.getParameter("id") + " 상세 정보"); %></title>
+		+ " : " + request.getParameter("id") + " 상세 정보"); 
+		if(request.getParameter("type").equals("관리자") &&
+				session.getAttribute("id")==null){
+			response.sendRedirect("error.jsp?type=403");
+		}
+		%></title>
 </head>
 <body>
 	<script type="text/javascript">
