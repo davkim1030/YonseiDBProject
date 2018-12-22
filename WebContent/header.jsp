@@ -54,6 +54,7 @@
 				<% if(log.equals("로그아웃")){out.print("<li><a href=\"search.jsp?type=관리자&page=1\">관리자 정보 검색</a></li>");}%>
 			</ul>
 		</li>
+		<li><a href="simulation.jsp">모의전투</a></li>
 	</ul>
 
 </body>

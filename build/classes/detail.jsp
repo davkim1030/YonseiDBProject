@@ -73,7 +73,7 @@
 					+ "체력증가, 마력증가, "
 					+ "공격력보정, 방어력보정, 체력보정, 마력보정, 힘보정, 지능보정 "
 					+ "FROM 용사 NATURAL JOIN 스킬, 종족 "
-					+ "WHERE 종족=종족명 AND 스킬=스킬이름 AND 용사.용사ID='"
+					+ "WHERE 스킬=스킬이름 AND 용사.용사ID='"
 					+ request.getParameter("id") +"'");
 			rs.next();
 			hpInc = rs.getInt("체력증가"); mpInc = rs.getInt("마력증가");
@@ -86,7 +86,7 @@
 					+ "공격력증가, 방어력증가, 힘증가, 지능증가, "
 					+ "공격력보정, 방어력보정, 체력보정, 마력보정, 힘보정, 지능보정 "
 					+ "FROM 용사 NATURAL JOIN 종족, 아이템 "
-					+ "WHERE 용사.용사ID=아이템.용사ID AND 종족=종족명 AND "
+					+ "WHERE 용사.용사ID=아이템.용사ID AND "
 					+ "용사.용사ID='" + request.getParameter("id") +"'");
 			rs.next();
 			atkInc = rs.getInt("공격력증가"); defInc = rs.getInt("방어력증가");
@@ -96,7 +96,7 @@
 		rs = stmt.executeQuery("SELECT 공격력, 방어력, 체력, 마력, 힘, 지능, "
 					+ "공격력보정, 방어력보정, 체력보정, 마력보정, 힘보정, 지능보정 "
 					+ "FROM 용사 NATURAL JOIN 종족 "
-					+ "WHERE 종족=종족명 AND "
+					+ "WHERE "
 					+ "용사.용사ID='" + request.getParameter("id") +"'");
 		rs.next();
 		atkCorr = rs.getInt("공격력보정"); defCorr = rs.getInt("방어력보정");

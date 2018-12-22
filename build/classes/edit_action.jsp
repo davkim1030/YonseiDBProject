@@ -103,14 +103,14 @@
 					+ " SET 천적종족='" + tribeName
 					+ "' WHERE 천적종족='" + prevId +"'");
 			stmt.execute("UPDATE 종족"
-					+ " SET 종족명='" + tribeName
+					+ " SET 종족='" + tribeName
 					+ "', 공격력보정=" + atkCorr
 					+ ", 방어력보정=" + defCorr
 					+ ", 체력보정=" + hpCorr
 					+ ", 마력보정=" + mpCorr
 					+ ", 힘보정=" + powCorr
 					+ ", 지능보정=" + intCorr
-					+ "WHERE 종족명='" + prevId +"'");
+					+ "WHERE 종족='" + prevId +"'");
 			stmt.execute("COMMIT");
 		} catch(Exception e){
 			out.print(e);

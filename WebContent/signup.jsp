@@ -44,10 +44,10 @@
 		</select><br>
 		종족 : <select name="tribe" form="administrate">
 		<%
-			rs = stmt.executeQuery("SELECT 종족명 FROM 종족");
+			rs = stmt.executeQuery("SELECT 종족 FROM 종족");
 			while(rs.next()){
-				out.print("<option value=\"" + rs.getString("종족명")
-				 + "\">" + rs.getString("종족명") + "</option>");
+				out.print("<option value=\"" + rs.getString("종족")
+				 + "\">" + rs.getString("종족") + "</option>");
 			}
 		%>	
 		</select><br>

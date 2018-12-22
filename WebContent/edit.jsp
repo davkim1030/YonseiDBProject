@@ -52,10 +52,10 @@
 		</select><br>
 		종족 : <select name="tribe" form="edit">
 		<%
-			rs = stmt.executeQuery("SELECT 종족명 FROM 종족");
+			rs = stmt.executeQuery("SELECT 종족 FROM 종족");
 			while(rs.next()){
-				out.print("<option value=\"" + rs.getString("종족명")
-				 + "\">" + rs.getString("종족명") + "</option>");
+				out.print("<option value=\"" + rs.getString("종족")
+				 + "\">" + rs.getString("종족") + "</option>");
 			}
 
 			rs.close();
@@ -71,7 +71,7 @@
 		<%
 	} else if(type.equals("종족")) {
 		%>
-		종족명 : <input type="text" name="name"><br>
+		종족 : <input type="text" name="name"><br>
 		공격력보정 : <input type="number" name="atk_corr"><br>
 		방어력보정 : <input type="number" name="def_corr"><br>
 		체력보정 : <input type="number" name="hp_corr"><br>
@@ -113,10 +113,10 @@
 		군단사기보정 : <input type="number" name="corp_morale_corr"><br>
 		천적종족 : <select name="enemy" form="edit">
 		<%
-			rs = stmt.executeQuery("SELECT 종족명 FROM 종족");
+			rs = stmt.executeQuery("SELECT 종족 FROM 종족");
 			while(rs.next()){
-				out.print("<option value=\"" + rs.getString("종족명")
-				 + "\">" + rs.getString("종족명") + "</option>");
+				out.print("<option value=\"" + rs.getString("종족")
+				 + "\">" + rs.getString("종족") + "</option>");
 			}
 		%>	
 		</select>
