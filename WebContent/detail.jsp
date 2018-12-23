@@ -312,6 +312,7 @@
 					+ "</td>");
 		out.print("</tr></table>");
 	}
+	if(session.getAttribute("id")!=null){
 	%>
 	<form method="POST" action="edit.jsp">
 		<input type="hidden" name="type" value="<% out.print(request.getParameter("type")); %>">
@@ -324,5 +325,6 @@
 		<input type="hidden" name="id" value= "<% out.print(request.getParameter("id")); %>">
 		<input type="submit" value="삭제">
 	</form>
+	<%} %>
 </body>
 </html>

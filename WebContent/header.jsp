@@ -35,8 +35,8 @@
 	<ul>
 		<li><a href="main.jsp">메인</a></li>
 		<li><a href="login.jsp">로그인</a></li>
-		<li><a href="signup.jsp">용사등록</a></li>
-		<% if(log.equals("로그아웃")){out.print("<li><a href=\"signup_admin.jsp\">관리자 등록</a></li>");}%>	
+		<% if(log.equals("로그아웃")){out.print("<li><a href=\"signup.jsp\">용사등록</a></li>"
+		+ "<li><a href=\"signup_admin.jsp\">관리자 등록</a></li>");}%>	
 		<li>데이터 통계
 			<ul>
 				<li><a href="statistics.jsp?type=용사">용사 데이터 통계</a></li>

@@ -47,7 +47,7 @@
 			var2 = 0;
 		}
 		
-		rs = stmt.executeQuery("SELECT 종족.*, 용사ID FROM 용사 NATURAL JOIN 종족 WHERE 용사ID='" + id + "'");
+		rs = stmt.executeQuery("SELECT * FROM 용사 NATURAL JOIN 종족 WHERE 용사ID='" + id + "'");
 		rs.next();
 		var3 = rs.getInt(att + "보정");
 		

@@ -35,7 +35,7 @@ public class LogInOut {
 		try{
 			rs = stmt.executeQuery("SELECT ID, PASSWORD " +
 					"FROM °ü¸®ÀÚ WHERE ID='" + id + "' AND PASSWORD='" + pe.encrypt(pwd) + "'");
-			System.out.println(pe.encrypt(pwd));
+			pe.encrypt(pwd);
 			if(rs.next()) {
 				isLogin = true;
 				return true;
