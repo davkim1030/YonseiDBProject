@@ -1,5 +1,6 @@
 <%@page import="java.sql.*" %>
 <%@page import="dbPackage.*" %>
+<%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,6 +12,7 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
+	
 	<% DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt(), stmt1 = dbCon.getCon().createStatement();
 	ResultSet rs;
@@ -18,11 +20,11 @@
 	%>
 	<h1>모의 전투</h1>
 
-	<form action="simul_result.jsp">
+	<form method="POST" action="simul_result.jsp">
 	<!--  테이블 헤더 추가 -->
 	<h2>용사 목록</h2>
 	<table border="1">
-		<th>  </th>
+		<th>   </th>
 		<th>용사ID</th>
 		<th>이름</th>
 		<th>보정공격력</th>
@@ -81,7 +83,7 @@
 		}
 		
 		// 테이블 그리기
-		out.print("<td><input type=\"checkbox\" name=\"w" + i + "\" value=\"" + rs.getString("용사ID") + "\"></td>"
+		out.print("<td><input type=\"checkbox\" name=\"war\" value=\"" + rs.getString("용사ID") + "\"></td>"
 				+ "<td>" + rs.getString("용사ID") + "</td>"
 				+ "<td>" + rs.getString("이름") + "</td>"
 				+ "<td>" + String.valueOf((atk + atkInc) * atkCor) + "</td>"
@@ -102,13 +104,14 @@
 	
 	<h2>마물군단 목록</h2>
 	<table border="1">
-		<th>  </th>
+		<th>    </th>
 		<th>마물군단이름</th>
 		<th>병력수</th>
 		<th>보정군단공격력</th>
 		<th>보정군단방어력</th>
 		<th>보정이동력</th>
 		<th>보정사기</th>
+		<th>천적종족</th>
 	<%
 	dbCon = new DBConnection();
 	stmt = dbCon.getStmt();
@@ -120,21 +123,20 @@
 		out.print("<tr>");
 		
 		// 테이블 그리기
-		out.print("<td><input type=\"radio\" name=\"m\" value=\"" + rs.getString("마물군단이름") + "\"></td>"
+		out.print("<td><input type=\"radio\" name=\"mon\" value=\"" + rs.getString("마물군단이름") + "\"></td>"
 				+ "<td>" + rs.getString("마물군단이름") + "</td>"
 				+ "<td>" + rs.getInt("병력수") + "</td>"
 				+ "<td>" + String.valueOf((rs.getInt("총공격력") * rs.getInt("군단공격력보정"))) + "</td>"
 				+ "<td>" + String.valueOf((rs.getInt("총방어력") * rs.getInt("군단방어력보정"))) + "</td>"
 				+ "<td>" + String.valueOf((rs.getInt("이동력") * rs.getInt("군단이동력보정"))) + "</td>"
-				+ "<td>" + String.valueOf((rs.getInt("사기") * rs.getInt("군단사기보정"))) + "</td>");
+				+ "<td>" + String.valueOf((rs.getInt("사기") * rs.getInt("군단사기보정"))) + "</td>"
+				+ "<td>" + rs.getString("천적종족") + "</td>");
 		
 		out.print("</tr>");
 	}
 
 	stmt.close();
 	dbCon.getCon().close();
-	
-	
 	%>
 		</table>
 		<br><br><input type="submit" value="시뮬레이션 실행">

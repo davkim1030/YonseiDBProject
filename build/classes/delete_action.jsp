@@ -19,9 +19,8 @@
 	String prevId = URLEncoder.encode(request.getParameter("id"), "UTF-8");
 	String type = URLEncoder.encode(request.getParameter("type"), "UTF-8");
 	//.decode(request.getParameter("type"), "UTF-8");
-	if(type.equals("관리자") && session.getAttribute("id")==null)
-		response.sendRedirect("error.jsp?type=403");
-	else{
+	if(!type.equals("관리자") || session.getAttribute("id")!=null){
+		
 		try{
 			// 각 타입에 따라 FK 때문에 선행되어야할 쿼리문들 먼저 실행
 			if(type.equals("용사")) {
@@ -48,7 +47,8 @@
 			} else if(URLDecoder.decode(type, "UTF-8").equals("관리자")) {
 				System.out.println("admin type");
 			} else { // 404 page not found
-				response.sendRedirect("error.jsp?type=404");
+				response.sendError(404);
+				//response.sendRedirect("error.jsp?type=404");
 			}
 			
 			// 실제 데이터를 삭제할 쿼리문
@@ -66,7 +66,9 @@
 		response.sendRedirect("search.jsp?type=" + type);
 		
 		request.setCharacterEncoding("UTF-8");
-	}
+	} else
+		response.sendRedirect("error.jsp?type=403");
+	
 		
 %>
 
