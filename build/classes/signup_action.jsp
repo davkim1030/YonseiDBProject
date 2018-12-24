@@ -15,11 +15,12 @@
 	Statement stmt = dbCon.getStmt();
 	ResultSet rs;
 	PwdEncryption pe = new PwdEncryption();
+	request.setCharacterEncoding("UTF-8");
+	String type = request.getParameter("type");
 %>
 
 <%
-	request.setCharacterEncoding("UTF-8");
-	if(request.getParameter("type").equals("admin"))
+	if(type.equals("admin"))
 		if(session.getAttribute("id")!=null){
 			String id, pw;
 			id = request.getParameter("id");
@@ -34,7 +35,7 @@
 			response.sendRedirect("search.jsp?type=" + URLEncoder.encode("관리자", "UTF-8") + "&page=1");
 		} else
 			response.sendRedirect("error.jsp?type=403");
-	else{
+	else if(type.equals("용사")){
 
 		String id, pw, name, birthPlace, skill, tribe;
 		int age, attack, defense, hp, mp, power, intel;
@@ -52,8 +53,6 @@
 		intel = Integer.parseInt(request.getParameter("intel"));
 		skill = request.getParameter("skill");
 		tribe = request.getParameter("tribe");
-		
-		
 		
 		try{
 			stmt.execute("INSERT INTO 용사 VALUES('" + id + "', '"
@@ -86,23 +85,52 @@
 					+ tribe + "')");
 			stmt.execute("COMMIT");
 		}
-		out.print("ID : " + id +
-				"<br>Password : " + pw + 
-				"<br>이름 : " + name +
-				"<br>나이 : " + String.valueOf(age) + 
-				"<br>출생지 : " + birthPlace + 
-				"<br>공격력 : " + String.valueOf(attack) + 
-				"<br>방어력 : " + String.valueOf(defense) + 
-				"<br>체력 : " + String.valueOf(hp) + 
-				"<br>마력 : " + String.valueOf(mp) + 
-				"<br>힘 : " + String.valueOf(power) + 
-				"<br>지능 : " + String.valueOf(intel) + 
-				"<br>스킬 : " + skill + 
-				"<br>종족 : " + tribe);
 		
-		response.sendRedirect("search.jsp?type=용사&page=1");
-		
+	} else if(type.equals("스킬")){
+		stmt.execute("INSERT INTO " + type + " VALUES('" + request.getParameter("col1")
+				+ "', " + request.getParameter("col2")
+				+ ", " + request.getParameter("col3") +")");
+	} else if(type.equals("종족")) {
+		stmt.execute("INSERT INTO " + type + " VALUES('" + request.getParameter("col1")
+				+ "', " + request.getParameter("col2")
+				+ ", " + request.getParameter("col3")
+				+ ", " + request.getParameter("col4")
+				+ ", " + request.getParameter("col5")
+				+ ", " + request.getParameter("col6")
+				+ ", " + request.getParameter("col7")+")");
+	} else if(type.equals("아이템")) {
+		stmt.execute("INSERT INTO " + type + " VALUES('" + request.getParameter("col1")
+		+ "', '" + request.getParameter("col2")
+		+ "', " + request.getParameter("col3")
+		+ ", " + request.getParameter("col4")
+		+ ", " + request.getParameter("col5")
+		+ ", " + request.getParameter("col6")
+		+ ", '" + request.getParameter("col7") +"')");
+	} else if(type.equals("마물군단")) {
+		stmt.execute("INSERT INTO " + type + " VALUES('" + request.getParameter("col1")
+		+ "', " + request.getParameter("col2")
+		+ ", " + request.getParameter("col3")
+		+ ", " + request.getParameter("col4")
+		+ ", " + request.getParameter("col5")
+		+ ", " + request.getParameter("col6") +")");
+	} else if(type.equals("마물장군")) {
+		stmt.execute("INSERT INTO " + type + " VALUES('" + request.getParameter("col1")
+		+ "', " + request.getParameter("col2")
+		+ ", " + request.getParameter("col3")
+		+ ", " + request.getParameter("col4")
+		+ ", " + request.getParameter("col5")
+		+ ", " + request.getParameter("col6")
+		+ ", '" + request.getParameter("col7") +"')");
+	} else if(type.equals("지휘관")){
+		stmt.execute("INSERT INTO " + type + " VALUES('" + request.getParameter("col1")
+		+ ", '" + request.getParameter("col2") +"')");
 	}
+	stmt.execute("COMMIT");
+	
+	if(!type.equals("지휘관"))
+		response.sendRedirect("search.jsp?type=" + URLEncoder.encode(type, "UTF-8") + "&page=1");
+	else
+		response.sendRedirect("search.jsp?type=마물군단");
 %>
 
 </body>

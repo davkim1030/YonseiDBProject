@@ -69,6 +69,7 @@
 	}
 	
 
+	out.print("<h1>");
 	if (warTotAtk > monDef && monAtk <= warTotDef)
 		out.print("승리");
 	else if (warTotAtk <= monDef && monAtk > warTotDef)
@@ -77,6 +78,7 @@
 		out.print("전멸");
 	else
 		out.print("무승부");
+	out.print("</h1>");
 
 %>
 

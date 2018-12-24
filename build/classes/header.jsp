@@ -35,8 +35,17 @@
 	<ul>
 		<li><a href="main.jsp">메인</a></li>
 		<li><a href="login.jsp">로그인</a></li>
-		<% if(log.equals("로그아웃")){out.print("<li><a href=\"signup.jsp\">용사등록</a></li>"
-		+ "<li><a href=\"signup_admin.jsp\">관리자 등록</a></li>");}%>	
+		<li>정보 등록</li>
+		<ul>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup.jsp?type=용사\">용사 등록</a></li>" : "" %>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup.jsp?type=스킬\">스킬 등록</a></li>" : "" %>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup.jsp?type=종족\">종족 등록</a></li>" : "" %>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup.jsp?type=아이템\">아이템 등록</a></li>" : "" %>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup.jsp?type=마물군단\">마물군단 등록</a></li>" : "" %>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup.jsp?type=마물장군\">마물장군 등록</a></li>" : "" %>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup.jsp?type=지휘관\">지휘관 등록</a></li>" : "" %>
+			<%= log.equals("로그아웃") ? "<li><a href=\"signup_admin.jsp\">관리자 등록</a></li>" : "" %>	
+		</ul>
 		<li>데이터 통계
 			<ul>
 				<li><a href="statistics.jsp?type=용사">용사 데이터 통계</a></li>
@@ -51,7 +60,7 @@
 				<li><a href="search.jsp?type=아이템&page=1">아이템 정보 검색</a></li>
 				<li><a href="search.jsp?type=마물군단&page=1">마물군단 정보 검색</a></li>
 				<li><a href="search.jsp?type=마물장군&page=1">마물장군 정보 검색</a></li>
-				<% if(log.equals("로그아웃")){out.print("<li><a href=\"search.jsp?type=관리자&page=1\">관리자 정보 검색</a></li>");}%>
+				<%= log.equals("로그아웃") ? "<li><a href=\"search.jsp?type=관리자&page=1\">관리자 정보 검색</a></li>" : "" %>
 			</ul>
 		</li>
 		<li><a href="simulation.jsp">모의전투</a></li>
