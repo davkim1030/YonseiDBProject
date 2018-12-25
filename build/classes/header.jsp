@@ -40,6 +40,7 @@ margin-top:60px;}
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="main.jsp"
 			style="font-weight:bolder;">연세왕국</a></li>
+		<%if(log.equals("로그아웃")) {%>
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
        			정보 등록
@@ -52,10 +53,10 @@ margin-top:60px;}
         		<a class="dropdown-item" href="signup.jsp?type=마물군단">마물군단 등록</a>
         		<a class="dropdown-item" href="signup.jsp?type=마물장군">마물장군 등록</a>
         		<a class="dropdown-item" href="signup.jsp?type=지휘관">지휘관 등록</a>
-        		<a class="dropdown-item" href="signup_amin.jsp">관리자 등록</a>
+        		<a class="dropdown-item" href="signup_admin.jsp">관리자 등록</a>
       		</div>
       	</li>
-      	
+      	<%} %>
       	<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
        			데이터 통계
@@ -77,7 +78,7 @@ margin-top:60px;}
         		<a class="dropdown-item" href="search.jsp?type=아이템&page=1">아이템 정보 검색</a>
         		<a class="dropdown-item" href="search.jsp?type=마물군단&page=1">마물군단 정보 검색</a>
         		<a class="dropdown-item" href="search.jsp?type=마물장군&page=1">마물장군 정보 검색</a>
-        		<a class="dropdown-item" href="search.jsp?type=관리자&page=1">관리자 정보 검색</a>
+        		<% if(log.equals("로그아웃")){%><a class="dropdown-item" href="search.jsp?type=관리자&page=1">관리자 정보 검색</a><%} %>
       		</div>
       	</li>
       	

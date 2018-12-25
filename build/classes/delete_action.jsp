@@ -47,7 +47,8 @@
 			} else if(URLDecoder.decode(type, "UTF-8").equals("관리자")) {
 				System.out.println("admin type");
 			} else { // 404 page not found
-				response.sendError(404);
+				out.print("404 error");
+				//response.sendError(404);
 				//response.sendRedirect("error.jsp?type=404");
 			}
 			
@@ -63,11 +64,11 @@
 			e.printStackTrace();
 		}
 	
+		request.setCharacterEncoding("UTF-8");
 		response.sendRedirect("search.jsp?type=" + type);
 		
-		request.setCharacterEncoding("UTF-8");
 	} else
-		response.sendRedirect("error.jsp?type=403");
+		out.print("error!");
 	
 		
 %>

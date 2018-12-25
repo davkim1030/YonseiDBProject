@@ -123,7 +123,7 @@
 		+ ", '" + request.getParameter("col7") +"')");
 	} else if(type.equals("지휘관")){
 		stmt.execute("INSERT INTO " + type + " VALUES('" + request.getParameter("col1")
-		+ ", '" + request.getParameter("col2") +"')");
+		+ "', '" + request.getParameter("col2") +"')");
 	}
 	stmt.execute("COMMIT");
 	
