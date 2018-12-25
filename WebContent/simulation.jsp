@@ -23,8 +23,8 @@
 	<form method="POST" action="simul_result.jsp">
 	<!--  테이블 헤더 추가 -->
 	<h2>용사 목록</h2>
-	<table border="1">
-		<th>   </th>
+	<table class="table table-striped">
+		<th></th>
 		<th>용사ID</th>
 		<th>이름</th>
 		<th>보정공격력</th>
@@ -83,7 +83,10 @@
 		}
 		
 		// 테이블 그리기
-		out.print("<td><input type=\"checkbox\" name=\"war\" value=\"" + rs.getString("용사ID") + "\"></td>"
+		out.print("<td><div class=\"custom-control custom-checkbox\">"
+				+ "<input type=\"checkbox\" class=\"custom-control-input\" id=\"war"+i
+				+ "\" name=\"war\" value=\"" + rs.getString("용사ID") + "\">"
+				+ "<label class=\"custom-control-label\" for=\"war"+i+"\"></label></div></td>"
 				+ "<td>" + rs.getString("용사ID") + "</td>"
 				+ "<td>" + rs.getString("이름") + "</td>"
 				+ "<td>" + String.valueOf((atk + atkInc) * atkCor) + "</td>"
@@ -103,7 +106,7 @@
 	</table>
 	
 	<h2>마물군단 목록</h2>
-	<table border="1">
+	<table class="table table-striped">
 		<th>    </th>
 		<th>마물군단이름</th>
 		<th>병력수</th>
@@ -139,7 +142,7 @@
 	dbCon.getCon().close();
 	%>
 		</table>
-		<br><br><input type="submit" value="시뮬레이션 실행">
+		<br><br><input type="submit" class="btn btn-primary" value="시뮬레이션 실행">
 	</form>
 	<%
 	%>

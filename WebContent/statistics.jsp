@@ -19,7 +19,7 @@
 	request.setCharacterEncoding("UTF-8");
 	out.print("<h1>" + type + " 데이터 통계</h1>");
 	
-	%> <table border="1">
+	%> <table class="table table-striped">
 	<th>종류</th><th>값</th> <%
 	if(type.equals("용사")){
 		

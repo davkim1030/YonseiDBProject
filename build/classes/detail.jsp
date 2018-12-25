@@ -25,6 +25,8 @@
 		}
 	</script>
 	<jsp:include page="header.jsp"></jsp:include>
+	<div class="row center-block">
+	<div class="col-sm-8">
 	<% DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt();
 	ResultSet rs;
@@ -36,7 +38,7 @@
 		rs = stmt.executeQuery("SELECT * FROM 용사 WHERE 용사id='" + request.getParameter("id") + "'");
 		
 		rs.next();
-		out.print("<table border=\"1\">");
+		out.print("<table class=\"table table-striped\">");
 		// 애트리뷰트 개수에 맞게 table head 지정
 		for(int i = 0; i < 5; i++)
 			out.print("<th>"
@@ -105,7 +107,7 @@
 
 		
 		// 보정값과 초기값 출력
-		out.print("</table><br><table border=\"1\">"
+		out.print("</table><br><table class=\"table table-striped\">"
 				+ "<th>분류</th> <th>초기값</th> <th>보정값</th>");
 		out.print("<tr><td>공격력</td> <td>"
 				+ String.valueOf(rs.getInt("공격력")) + "</td> <td>"
@@ -151,7 +153,7 @@
 		rs = stmt.executeQuery("SELECT * FROM 마물군단"
 			+ " WHERE 마물군단이름='" + request.getParameter("id") + "'");
 		rs.next();
-		out.print("<table border=\"1\">");
+		out.print("<table class=\"table table-striped\">");
 		// 애트리뷰트 개수에 맞게 table head 지정
 		for(int i = 0; i < 6; i++)
 			out.print("<th>"
@@ -193,7 +195,7 @@
 		speed = rs.getInt("이동력"); morale = rs.getInt("사기");
 		troops = rs.getInt("병력수");
 		
-		out.print("<table border=\"1\">"
+		out.print("<table class=\"table table-striped\">"
 				+ "<th>분류</th> <th>초기값</th> <th>보정값</th>");
 		out.print("<tr><td>총공격력</td><td>"
 				+ String.valueOf(totAtk) + "</td><td>" 
@@ -217,7 +219,7 @@
 		out.print(String.valueOf(morale * moraleCorr) + "</a></td> </tr> </table>");
 		
 	} else if(request.getParameter("type").equals("아이템")) { // 아이템
-		out.print("<table border=\"1\">");
+		out.print("<table class=\"table table-striped\">");
 		
 		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type"));
 		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type")
@@ -244,7 +246,7 @@
 		out.print("</tr></table>");
 
 	} else if(request.getParameter("type").equals("마물장군")) { // 마물장군
-		out.print("<table border=\"1\">");
+		out.print("<table class=\"table table-striped\">");
 		
 		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type"));
 		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type")
@@ -271,7 +273,7 @@
 		out.print("</tr></table>");
 
 	} else if(request.getParameter("type").equals("관리자")) { // 관리자
-		out.print("<table border=\"1\">");
+		out.print("<table class=\"table table-striped\">");
 		
 		rs = stmt.executeQuery("SELECT * FROM " + URLDecoder.decode(request.getParameter("type"), "UTF-8"));
 		rs = stmt.executeQuery("SELECT * FROM " + URLDecoder.decode(request.getParameter("type"), "UTF-8")
@@ -292,7 +294,7 @@
 		out.print("</tr></table>");
 
 	} else { // FK가 없는 스킬, 종족 페이지에서만 프린트
-		out.print("<table border=\"1\">");
+		out.print("<table class=\"table table-striped\">");
 		
 		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type"));
 		rs = stmt.executeQuery("SELECT * FROM " + request.getParameter("type")
@@ -317,14 +319,15 @@
 	<form method="POST" action="edit.jsp">
 		<input type="hidden" name="type" value="<% out.print(request.getParameter("type")); %>">
 		<input type="hidden" name="id" value= "<% out.print(request.getParameter("id")); %>">
-		<input type="submit" value="수정">
+		<button type="submit" class="btn btn-primary">수정</button>
 	</form>
 	
 	<form method="GET" action="delete_action.jsp">
 		<input type="hidden" name="type" value="<% out.print(request.getParameter("type")); %>">
 		<input type="hidden" name="id" value= "<% out.print(request.getParameter("id")); %>">
-		<input type="submit" value="삭제">
+		<button type="submit" class="btn btn-primary">삭제</button>
 	</form>
 	<%} %>
+	</div></div>
 </body>
 </html>

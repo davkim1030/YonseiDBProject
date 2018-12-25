@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html">
 <title>
 	<% 
+	int itemPerPage = 10;	// 페이지당 보여줄 아이템 수
 	request.setCharacterEncoding("UTF-8");
 	String type;
 	// GET방식으로 보낸 파라메터 type 값에 따라 변수 설정 및 제목 적용
@@ -37,6 +38,7 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
+	<div class="center-block">
 	<%
 		DBConnection dbCon = new DBConnection();
 		Statement stmt = dbCon.getStmt();
@@ -50,10 +52,10 @@
 
 		// type 값에 따라 dropdown 버튼 만들기
 	%>
-	<form method="GET" action="search.jsp">
+	<form class="form-inline" method="GET" action="search.jsp">
 		<input type="hidden" name="type" value="<% out.print(type); %>">
 		<input type="hidden" name="page" value="1">
-		<select name="column_number">
+		<select class="custom-select mb3" name="column_number">
 		<%
 			// 해당 테이블에서 한 개의 쿼리만 가져오기
 			rs = stmt.executeQuery("SELECT * FROM " + type
@@ -64,12 +66,12 @@
 				+ "</option>");
 		%>
 		</select>
-		<input type="text" name="search_key">
-		<input type="submit" value="검색">
+		<input class="form-control" type="text" name="search_key">
+		<button type="submit" class="btn btn-primary">검색</button>
 	</form>
 	
 	<!-- 테이블 생성 -->
-	<table border="1">
+	<table class="table table-striped">
 		<%
 		// 애트리뷰트 개수에 맞게 table head 지정
 		for(int i = 0; i < rs.getMetaData().getColumnCount(); i++)
@@ -82,8 +84,8 @@
 		request.getParameter("search_key")==null ||
 		request.getParameter("search_key").equals("")) {
 			rs = stmt.executeQuery("SELECT * FROM (SELECT T.*, ROWNUM R FROM "
-			+ type + " T) WHERE R>=" + String.valueOf((currPage - 1) * 20 + 1)
-			+ " AND R<=" + String.valueOf(currPage * 20));
+			+ type + " T) WHERE R>=" + String.valueOf((currPage - 1) * itemPerPage + 1)
+			+ " AND R<=" + String.valueOf(currPage * itemPerPage));
 		
 		// column_number나 search_key가 정해지면 해당 값을 기반으로 검색
 		} else {
@@ -96,8 +98,8 @@
 			if(columnName.equals("int")){
 				rs = stmt.executeQuery("SELECT * FROM (SELECT T.*, ROWNUM R FROM "
 						+ type + " T) WHERE "+ columnName + "=" + searchKey
-						+ " AND R>=" + String.valueOf((currPage - 1) * 20 + 1)
-						+ " AND R<=" + String.valueOf(currPage * 20));
+						+ " AND R>=" + String.valueOf((currPage - 1) * itemPerPage + 1)
+						+ " AND R<=" + String.valueOf(currPage * itemPerPage));
 				
 			} else {	// String의 경우는 포함하는 값까지 모두 검색
 				rs = stmt.executeQuery("SELECT * FROM (SELECT T.*, ROWNUM R FROM " + type
@@ -106,13 +108,13 @@
 						+ columnName + " LIKE '" + searchKey + "%' OR "
 						+ columnName + " LIKE '%" + searchKey + "' OR "
 						+ columnName + "='" + searchKey + "'"
-						+ " AND R>=" + String.valueOf((currPage - 1) * 20 + 1)
-						+ " AND R<=" + String.valueOf(currPage * 20));
+						+ " AND R>=" + String.valueOf((currPage - 1) * itemPerPage + 1)
+						+ " AND R<=" + String.valueOf(currPage * itemPerPage));
 			}
 		}
 
 		// 위에서 지정한 값들을 기반으로 테이블 생성
-		for(int i = 0; rs.next() && i < 20; i++){
+		for(int i = 0; rs.next() && i < itemPerPage; i++){
 			out.print("<tr>");
 			for(int j = 1; j <= rs.getMetaData().getColumnCount() - 1; j++){
 				out.print("<td>");
@@ -134,7 +136,7 @@
 		}
 
 		%>
-	</table><br>
+	</table>
 	<%
 		if(request.getParameter("column_number")==null ||
 		request.getParameter("search_key")==null ||
@@ -146,7 +148,7 @@
 			rs = stmtTmp.executeQuery("SELECT " + rs.getMetaData().getColumnName(1) + " FROM " + type);
 			rs.last();
 		
-			pageCount = (rs.getRow() / 20) + 1;
+			pageCount = (rs.getRow() / itemPerPage) + 1;
 		} else {
 			String columnName = rs.getMetaData().getColumnName(Integer.valueOf(request.getParameter("column_number")));
 			String searchKey = request.getParameter("search_key");
@@ -168,17 +170,17 @@
 			
 			rs.last();
 			
-			pageCount = (rs.getRow() / 20) + 1;
+			pageCount = (rs.getRow() / itemPerPage) + 1;
 		}
 
+		out.print("<ul class=\"pagination\" style=\"justify-content: center;\">");
 		for(int i = 1; i <= pageCount; i++){
-			if(i!=currPage)
-				out.print("<a href=\"search.jsp?type=" + type
+				out.print("<li class=\"page-item\"><a class=\"page-link\" href=\"search.jsp?type=" + type
 				+ "&page=" + String.valueOf(i) + "\">"
-				+ String.valueOf(i) + "</a> ");
-			else
-				out.print(String.valueOf(i) + " ");
+				+ String.valueOf(i) + "</a></li> ");
 		}
+		out.print("</ul>");
 	%>
+	</div>
 </body>
 </html>

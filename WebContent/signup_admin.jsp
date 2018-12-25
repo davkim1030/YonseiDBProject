@@ -16,7 +16,7 @@
 		ID : <input type="text" name="id"><br>
 		PASSWORD : <input type="password" name="pw"><br>
 		<input type="hidden" name="type" value="admin">
-		<input type="submit" value="등록">
+		<input type="submit" class="btn btn-primary" value="등록">
 	</form>
 </body>
 </html>
