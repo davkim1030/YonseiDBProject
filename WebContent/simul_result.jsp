@@ -8,9 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>시뮬레이션 결과</title>
+<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
 	
 <%	request.setCharacterEncoding("UTF-8");
 	String[] check = request.getParameterValues("war");

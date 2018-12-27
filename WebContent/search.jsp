@@ -35,10 +35,10 @@
 		// TODO : 404로 리다이렉트, exception_handler 만들기
 	}
 	out.print(type); %> 정보 검색</title>
+<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
-	<div class="center-block">
+	<div class="row">
 	<%
 		DBConnection dbCon = new DBConnection();
 		Statement stmt = dbCon.getStmt();
@@ -47,11 +47,11 @@
 		// 페이지가 null 값이면 1로 예외처리
 		int currPage = request.getParameter("page")==null ? 1 : Integer.valueOf(request.getParameter("page"));
 		ResultSet rsTmp;
-
-		out.print("<h1>" + type + " 정보 검색</h1>");
-
 		// type 값에 따라 dropdown 버튼 만들기
 	%>
+	<div class="col-xl-1"></div>
+	<div class="col-xl-10">
+	<h1><%=type + " 정보검색" %></h1>
 	<form class="form-inline" method="GET" action="search.jsp">
 		<input type="hidden" name="type" value="<% out.print(type); %>">
 		<input type="hidden" name="page" value="1">
@@ -181,6 +181,8 @@
 		}
 		out.print("</ul>");
 	%>
+	</div>
+	<div class="col-xl-1"></div>
 	</div>
 </body>
 </html>

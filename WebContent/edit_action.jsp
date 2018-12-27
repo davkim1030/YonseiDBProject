@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>정보 수정 중</title>
+<link href="http://localhost:8080/YonseiDBProject/images/favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 <body>
 <%
@@ -71,9 +72,9 @@
 				"\n스킬 : " + skill + 
 				"\n종족 : " + tribe);
 	} else if(type.equals("스킬")) {
-		String skillName = request.getParameter("name");
-		String hpInc = request.getParameter("hp_inc");
-		String mpInc = request.getParameter("mp_inc");
+		String skillName = request.getParameter("col1");
+		String hpInc = request.getParameter("col2");
+		String mpInc = request.getParameter("col3");
 		try{
 			stmt.execute("UPDATE 용사 "
 					+ "SET 스킬='" + skillName
@@ -88,13 +89,13 @@
 			out.print(e.toString());
 		}
 	} else if(type.equals("종족")) {
-		String tribeName = request.getParameter("name");
-		String atkCorr = request.getParameter("atk_corr");
-		String defCorr = request.getParameter("def_corr");
-		String hpCorr = request.getParameter("hp_corr");
-		String mpCorr = request.getParameter("mp_corr");
-		String powCorr = request.getParameter("pow_corr");
-		String intCorr = request.getParameter("int_corr");
+		String tribeName = request.getParameter("col1");
+		String atkCorr = request.getParameter("col2");
+		String defCorr = request.getParameter("col3");
+		String hpCorr = request.getParameter("col4");
+		String mpCorr = request.getParameter("col5");
+		String powCorr = request.getParameter("col6");
+		String intCorr = request.getParameter("col7");
 		try{
 			stmt.execute("UPDATE 용사"
 					+ " SET 종족='" + tribeName
@@ -116,13 +117,13 @@
 			out.print(e);
 		}
 	} else if(type.equals("아이템")){
-		String itemName = request.getParameter("name");
-		String itemType = request.getParameter("item_type");
-		String atkInc = request.getParameter("atk_inc");
-		String defInc = request.getParameter("def_inc");
-		String powInc = request.getParameter("pow_inc");
-		String intInc = request.getParameter("int_inc");
-		String warId = request.getParameter("war_id");
+		String itemName = request.getParameter("col1");
+		String itemType = request.getParameter("col2");
+		String atkInc = request.getParameter("col3");
+		String defInc = request.getParameter("col4");
+		String powInc = request.getParameter("col5");
+		String intInc = request.getParameter("col6");
+		String warId = request.getParameter("col7");
 		try{
 			stmt.execute("UPDATE 아이템"
 					+ " SET 아이템이름='" + itemName
@@ -137,12 +138,12 @@
 			out.print(e);
 		}
 	} else if(type.equals("마물군단")) {
-		String corpsName = request.getParameter("name");
-		String troopsNumber = request.getParameter("troops_number");
-		String totAtk = request.getParameter("tot_atk");
-		String totDef = request.getParameter("tot_def");
-		String speed = request.getParameter("speed");
-		String morale = request.getParameter("morale");
+		String corpsName = request.getParameter("col1");
+		String troopsNumber = request.getParameter("col2");
+		String totAtk = request.getParameter("col3");
+		String totDef = request.getParameter("col4");
+		String speed = request.getParameter("col5");
+		String morale = request.getParameter("col6");
 		try{
 			stmt.execute("UPDATE 지휘관"
 					+ " SET 마물군단이름='" + corpsName
@@ -160,12 +161,12 @@
 			out.print(e);
 		}
 	} else if(type.equals("마물장군")) {
-		String generalName = request.getParameter("name");
-		String age = request.getParameter("age");
-		String corpsAtkCorr = request.getParameter("corps_atk_corr");
-		String corpsSpeedCorr = request.getParameter("corps_speed_corr");
-		String corpsMoraleCorr = request.getParameter("corps_morale_corr");
-		String enemy = request.getParameter("enemy");
+		String generalName = request.getParameter("col1");
+		String age = request.getParameter("col2");
+		String corpsAtkCorr = request.getParameter("col3");
+		String corpsSpeedCorr = request.getParameter("col4");
+		String corpsMoraleCorr = request.getParameter("col5");
+		String enemy = request.getParameter("col6");
 		try{
 			stmt.execute("UPDATE 지휘관"
 					+ " SET 마물장군이름='" + generalName

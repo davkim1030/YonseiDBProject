@@ -15,6 +15,7 @@
 			response.sendRedirect("error.jsp?type=403");
 		}
 		%></title>
+	<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
 	<script type="text/javascript">
@@ -24,9 +25,9 @@
 			window.open(popUrl,"",popOption);
 		}
 	</script>
-	<jsp:include page="header.jsp"></jsp:include>
 	<div class="row center-block">
-	<div class="col-sm-8">
+	<div class="col-xl-1"></div>
+	<div class="col-xl-10">
 	<% DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt();
 	ResultSet rs;
@@ -54,13 +55,17 @@
 		for(int i = 0; i < 5; i++)
 			out.print("<td>"
 			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString()));
-		for(int i = 11; i < 13; i++)
-			out.print("<td><a href=\"detail.jsp?type="
-			+ rs.getMetaData().getColumnName(i + 1) + "&id="
-			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
-			+ "\">"
-			+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
-			+ "</a></td>");
+		for(int i = 11; i < 13; i++){
+			if(rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())==null)
+				out.print("<td></td>");
+			else
+				out.print("<td><a href=\"detail.jsp?type="
+				+ rs.getMetaData().getColumnName(i + 1) + "&id="
+				+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
+				+ "\">"
+				+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString())
+				+ "</a></td>");
+		}
 		out.print("</tr>");
 		
 		int atkInc = 0, defInc = 0, hpInc = 0, mpInc = 0, powInc = 0, intInc = 0,
@@ -316,18 +321,26 @@
 	}
 	if(session.getAttribute("id")!=null){
 	%>
+	<table>
+	<tr><td>
 	<form method="POST" action="edit.jsp">
 		<input type="hidden" name="type" value="<% out.print(request.getParameter("type")); %>">
 		<input type="hidden" name="id" value= "<% out.print(request.getParameter("id")); %>">
+		<input type="hidden" name="skill" value= "<% out.print(request.getParameter("skill")); %>">
 		<button type="submit" class="btn btn-primary">수정</button>
 	</form>
-	
+	</td><td>
 	<form method="GET" action="delete_action.jsp">
 		<input type="hidden" name="type" value="<% out.print(request.getParameter("type")); %>">
 		<input type="hidden" name="id" value= "<% out.print(request.getParameter("id")); %>">
+		<input type="hidden" name="skill" value= "<% out.print(request.getParameter("skill")); %>">
 		<button type="submit" class="btn btn-primary">삭제</button>
 	</form>
+	</td></tr>
+	</table>
 	<%} %>
-	</div></div>
+	</div>
+	<div class="col-xl-1"></div>
+	</div>
 </body>
 </html>

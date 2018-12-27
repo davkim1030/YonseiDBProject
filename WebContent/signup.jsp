@@ -5,7 +5,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
+<jsp:include page="header.jsp"></jsp:include>
 <meta http-equiv="Content-Type" content="text/html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%String type = request.getParameter("type"); out.print(type);%> 등록</title>
 
 </head>
@@ -16,28 +18,88 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
+	<div class="row">
+	<div class="col-xl-1"></div>
+	<div class="col-xl-10">
 	<h1><%=type %> 정보 입력</h1>
-	<form class="form-inline" method="POST" action="signup_action.jsp" id="administrate">
-	<table>
+	<form class="form-group" method="POST" action="signup_action.jsp" id="administrate">
 	<%
 	if(type==null)
 		response.sendRedirect("error.jsp");
 	else if(type.equals("용사")){
 	%>
-		<tr><td>용사 ID</td><td><input class="form-control"type="text" name="id"></td></tr>
-		<tr><td>Password</td><td><input class="form-control" type="password" name="pw"></td></tr>
-		<tr><td>이름</td><td><input type="text" class="form-control" name="name"></td></tr>
-		<tr><td>나이</td><td><input type="number" class="form-control" name="age"></td></tr>
-		<tr><td>출생지</td><td><input type="text" class="form-control" name="birthPlace"></td></tr>
-		<tr><td>공격력</td><td><input type="number" class="form-control" name="attack"></td></tr>
-		<tr><td>방어력</td><td><input type="number" class="form-control" name="defense"></td></tr>
-		<tr><td>체력</td><td><input type="number" class="form-control" name="hp"></td></tr>
-		<tr><td>마력</td><td><input type="number" class="form-control" name="mp"></td></tr>
-		<tr><td>힘</td><td><input type="number" class="form-control" name="power"></td></tr>
-		<tr><td>지능</td><td><input type="number" class="form-control" name="intel"></td></tr>
+	    <div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">용사ID</span>
+      		</div>
+	      	<input type="text" class="form-control" id="id" name="id">
+   		</div>
+   		
+	    <div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">Password</span>
+      		</div>
+	      	<input type="password" class="form-control" id="pw" name="pw">
+   		</div>
 		
-		<tr><td>스킬</td><td><select class="custom-select" name="skill" form="administrate">
+	    <div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">이름</span>
+      		</div>
+	      	<input type="text" class="form-control" id="name" name="name">
+   		</div>
+   		
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">나이</span>
+      		</div>
+	      	<input type="number" class="form-control" id="age" name="age">
+   		</div>
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">출생지</span>
+      		</div>
+	      	<input type="text" class="form-control" id="birthPlace" name="birthPlace">
+   		</div>
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">공격력</span>
+      		</div>
+	      	<input type="number" class="form-control" id="attack" name="attack">
+   		</div>
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">방어력</span>
+      		</div>
+	      	<input type="number" class="form-control" id="defense" name="defense">
+   		</div>
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">체력</span>
+      		</div>
+	      	<input type="number" class="form-control" id="hp" name="hp">
+   		</div>
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">마력</span>
+      		</div>
+	      	<input type="number" class="form-control" id="mp" name="mp">
+   		</div>
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">힘</span>
+      		</div>
+	      	<input type="number" class="form-control" id="power" name="power">
+   		</div>
+   		<div class="input-group mb-3">
+    	  	<div class="input-group-prepend">
+      		  <span class="input-group-text">지능</span>
+      		</div>
+	      	<input type="number" class="form-control" id="intel" name="intel">
+   		</div>
+   		
+		<select class="custom-select" name="skill" form="administrate">
+		<option>스킬</option>
 		<%
 		rs = stmt.executeQuery("SELECT 스킬이름 FROM 스킬"
 				+ " WHERE 스킬이름 NOT IN (SELECT 스킬이름 FROM"
@@ -47,8 +109,8 @@
 				 + "\">" + rs.getString("스킬이름") + "</option>");
 			}
 		%>	
-		</select></td></tr>
-		<tr><td>종족</td><td><select class="custom-select" name="tribe" form="administrate">
+		</select>
+		<select class="custom-select" name="tribe" form="administrate">
 		<%
 			rs = stmt.executeQuery("SELECT 종족 FROM 종족");
 			while(rs.next()){
@@ -56,7 +118,7 @@
 				 + "\">" + rs.getString("종족") + "</option>");
 			}
 		%>	
-		</select></td></tr>
+		</select>
 		
 	<%
 	} else if(type.equals("스킬") || type.equals("종족") || 
@@ -64,30 +126,34 @@
 		rs = stmt.executeQuery("SELECT * FROM " + type + " WHERE ROWNUM=1");
 		
 		for(int i = 1; i <= rs.getMetaData().getColumnCount(); i++){
-			out.print("<tr><td>" + rs.getMetaData().getColumnName(i) + "</td>"
-					+ "<td><input class=\"form-control\"type=\"" + (i==1 ? "text" : "number") + "\" name=\"col"
-					+ i + "\"></td></tr>");
+			out.print("<div class=\"input-group mb-3\"><div class=\"input-group-prepend\">"
+					+ "<span class=\"input-group-text\">"+ rs.getMetaData().getColumnName(i) 
+					+"</span></div>"
+					+ "<input class=\"form-control\"type=\"" + (i==1 ? "text" : "number") + "\" name=\"col"
+					+ i + "\" id=\"col" + i + "\"></div>");
 		}
 	} else if(type.equals("아이템")){
 		rs = stmt.executeQuery("SELECT * FROM " + type + " WHERE ROWNUM=1");
 		
 		for(int i = 1; i <= rs.getMetaData().getColumnCount() - 1; i++){
 			if(i!=2)
-				out.print("<tr><td>" + rs.getMetaData().getColumnName(i) + "</td>"
-					+ "<td><input class=\"form-control\" type=\"" + (i==1 ? "text" : "number") + "\" name=\"col"
-					+ i + "\"></td></tr>");
+				out.print("<div class=\"input-group mb-3\"><div class=\"input-group-prepend\">"
+					+ "<span class=\"input-group-text\">"+ rs.getMetaData().getColumnName(i) 
+					+"</span></div>"
+					+ "<input class=\"form-control\"type=\"" + (i==1 ? "text" : "number") + "\" name=\"col"
+					+ i + "\" id=\"col" + i + "\"></div>");
 			else
-				out.print("<tr><td>" + rs.getMetaData().getColumnName(i) + "</td>"
-						+ "<td><select class=\"custom-select\" name=\"col" + i
+				out.print(rs.getMetaData().getColumnName(i)
+						+ "<select class=\"custom-select\" name=\"col" + i
 						+ "\" form=\"administrate\">"
 						+ "<option value=\"칼\">칼</option>"
 						+ "<option value=\"창\">창</option>"
 						+ "<option value=\"활\">활</option>"
 						+ "<option value=\"갑옷\">갑옷</option>"
 						+ "<option value=\"방패\">방패</option>"
-						+ "</select></td></tr>");
+						+ "</select><p>");
 		}
-		out.print("<tr><td>용사ID</td><td><select class=\"custom-select\" name=\"col"
+		out.print("용사ID<select class=\"custom-select\" name=\"col"
 				+ rs.getMetaData().getColumnCount() +"\" form=\"administrate\">");
 		
 		rs = stmt.executeQuery("SELECT 용사ID FROM 용사 WHERE 용사ID NOT IN "
@@ -96,7 +162,7 @@
 			out.print("<option value=\"" + rs.getString("용사ID") +"\">"
 					+ rs.getString("용사ID") + "</option>");
 		}
-		out.print("</select></td></tr>");
+		out.print("</select><p>");
 	} else if(type.equals("지휘관")) {
 		out.print("<tr><td>마물장군이름</td><td><select class=\"custom-select\" form=\"administrate\" name=\"col1\">");
 		rs = stmt.executeQuery("SELECT * FROM 마물장군");
@@ -117,11 +183,13 @@
 		rs = stmt.executeQuery("SELECT * FROM " + type + " WHERE ROWNUM=1");
 			
 		for(int i = 1; i <= rs.getMetaData().getColumnCount() - 1; i++){
-			out.print("<tr><td>" + rs.getMetaData().getColumnName(i) + "</td>"
-					+ "<td><input class=\"form-control\" type=\"" + (i==1 ? "text" : "number") + "\" name=\"col"
-					+ i + "\"></td></tr>");
+			out.print("<div class=\"input-group mb-3\"><div class=\"input-group-prepend\">"
+					+ "<span class=\"input-group-text\">"+ rs.getMetaData().getColumnName(i) 
+					+"</span></div>"
+					+ "<input class=\"form-control\"type=\"" + (i==1 ? "text" : "number") + "\" name=\"col"
+					+ i + "\" id=\"col" + i + "\"></div>");
 		}
-		out.print("<tr><td>천적종족</td><td><select class=\"custom-select\" name=\"col"
+		out.print("천적종족<select class=\"custom-select\" name=\"col"
 			+ rs.getMetaData().getColumnCount() + "\" form=\"administrate\">");
 		
 		rs = stmt.executeQuery("SELECT 종족 FROM 종족");
@@ -129,13 +197,15 @@
 			out.print("<option value=\"" + rs.getString("종족")
 			 + "\">" + rs.getString("종족") + "</option>");
 		}
-		out.print("</select></td></tr>");
+		out.print("</select>");
 	}
 	%>
 		
-		<tr><td><input type="submit" class="btn btn-primary" value="등록"></td><td></td></tr>
-		</table>
+		<input type="submit" class="btn btn-primary" value="등록">
 		<input type="hidden" name="type" value="<%= type %>">
 	</form>
+	</div>
+	<div class="col-xl-1"></div>
+	</div>
 </body>
 </html>

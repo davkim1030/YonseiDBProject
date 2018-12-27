@@ -10,16 +10,19 @@
 <title><% request.setCharacterEncoding("UTF-8");
 	String type = request.getParameter("type");
 		out.print(type + " 데이터 통계"); %></title>
+	<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
+	<div class="row">
+	<div class="col-xl-1"></div>
+	<div class="col-xl-10">
 	<% DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt();
 	ResultSet rs;
 	request.setCharacterEncoding("UTF-8");
 	out.print("<h1>" + type + " 데이터 통계</h1>");
-	
-	%> <table class="table table-striped">
+	%>
+	<table class="table table-striped">
 	<th>종류</th><th>값</th> <%
 	if(type.equals("용사")){
 		
@@ -30,10 +33,29 @@
 				+ " FROM 용사");
 		rs.next();
 		
+		// 본 데이터 테이블
 		for(int i = 1; i <= rs.getMetaData().getColumnCount(); i++){
 			out.print("<tr><td>" + rs.getMetaData().getColumnName(i) + "</td>");
 			out.print("<td>" + rs.getInt(rs.getMetaData().getColumnName(i)) + "</td></tr>");
 		}
+		// 종족 데이터 테이블
+		out.print("</table><br><h1>종족 데이터</h1><table class=\"table table-striped\">");
+		rs = stmt.executeQuery("SELECT 종족, count(종족) AS 인원수, "
+				+ " round(avg(공격력), 2) AS 평균공격력, round(avg(방어력), 2) AS 평균방어력 "
+				+ " FROM 종족 NATURAL JOIN 용사 "
+				+ " GROUP BY 종족");
+
+		for(int i = 1; i <= rs.getMetaData().getColumnCount(); i++){
+			out.print("<th>" + rs.getMetaData().getColumnName(i) + "</th>");
+		}
+		for(int i = 1; rs.next(); i++){
+			out.print("<tr>");
+			for(int k = 1; k <= rs.getMetaData().getColumnCount(); k++){
+				out.print("<td>" + rs.getObject(rs.getMetaData().getColumnName(k))+"</td>");
+			}
+			out.print("</tr>");
+		}
+		out.print("</table>");
 	} else if(type.equals("마물군단")) {
 		rs = stmt.executeQuery("SELECT count(마물군단이름) AS 총군단수, sum(병력수) AS 총병력수, "
 				+ " sum(총공격력 * 군단공격력보정) AS 총군단공격력, sum(총방어력 * 군단방어력보정) AS 총군단방어력, "
@@ -53,6 +75,8 @@
 		dbCon.getCon().close();
 	%>
 	</table>
-	
+	</div>
+	<div class="col-xl-1"></div>
+	</div>
 </body>
 </html>

@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>로그아웃중...</title>
+<link href="http://localhost:8080/YonseiDBProject/images/favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 <body>
 

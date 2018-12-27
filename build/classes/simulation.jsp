@@ -9,15 +9,18 @@
 <meta http-equiv="Content-Type" content="text/html">
 <% request.setCharacterEncoding("UTF-8"); %>
 <title>모의 전투</title>
+	<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
 	
 	<% DBConnection dbCon = new DBConnection();
 	Statement stmt = dbCon.getStmt(), stmt1 = dbCon.getCon().createStatement();
 	ResultSet rs;
 	request.setCharacterEncoding("UTF-8");
 	%>
+	<div class="row">
+	<div class="col-xl-1"></div>
+	<div class="col-xl-10">
 	<h1>모의 전투</h1>
 
 	<form method="POST" action="simul_result.jsp">
@@ -144,8 +147,8 @@
 		</table>
 		<br><br><input type="submit" class="btn btn-primary" value="시뮬레이션 실행">
 	</form>
-	<%
-	%>
-	
+	</div>
+	<div class="col-xl-1"></div>
+	</div>
 </body>
 </html>

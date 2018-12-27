@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Sign Up Result</title>
+<link href="http://localhost:8080/YonseiDBProject/images/favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 <body>
 <%
@@ -51,8 +52,10 @@
 		mp = Integer.parseInt(request.getParameter("mp"));
 		power = Integer.parseInt(request.getParameter("power"));
 		intel = Integer.parseInt(request.getParameter("intel"));
-		skill = request.getParameter("skill");
-		tribe = request.getParameter("tribe");
+		skill = request.getParameter("skill")=="null" 
+				? "" : "'" + request.getParameter("skill") +"'";
+		tribe = request.getParameter("tribe")=="null"
+				? "" : "'" + request.getParameter("tribe") +"'";
 		
 		try{
 			stmt.execute("INSERT INTO 용사 VALUES('" + id + "', '"
@@ -65,9 +68,9 @@
 					+ String.valueOf(hp) + ", "
 					+ String.valueOf(mp) + ", "
 					+ String.valueOf(power) + ", "
-					+ String.valueOf(intel) + ", '"
-					+ skill + "', '"
-					+ tribe + "')");
+					+ String.valueOf(intel) + ", "
+					+ skill + ", "
+					+ tribe + ")");
 			stmt.execute("COMMIT");
 		} catch(SQLException sqle){
 			stmt.execute("INSERT INTO 용사 VALUES('" + id + "', '"
@@ -81,8 +84,8 @@
 					+ String.valueOf(mp) + ", "
 					+ String.valueOf(power) + ", "
 					+ String.valueOf(intel) + ", null"
-					+ ", '"
-					+ tribe + "')");
+					+ ", "
+					+ tribe + ")");
 			stmt.execute("COMMIT");
 		}
 		
