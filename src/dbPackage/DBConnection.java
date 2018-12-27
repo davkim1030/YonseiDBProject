@@ -14,7 +14,7 @@ public class DBConnection {
 		DB_URL = "jdbc:oracle:thin:@localhost:1521:orcl";
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-			con = DriverManager.getConnection(DB_URL, "system", "Ab403118?!");
+			con = DriverManager.getConnection(DB_URL, /*DatabaseID*/, /*DatabasePassword*/);
 			stmt = con.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
