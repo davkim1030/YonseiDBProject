@@ -25,11 +25,13 @@
 		if(log.logIn(id, pw)){
 			session.setAttribute("id", id);
 			session.setAttribute("isLogin", "true");
+			response.sendRedirect("main.jsp");
 		} else{
+			%><script>alert("ID나 password가 틀렸습니다.");
+			window.location.href = 'http://localhost:8080/YonseiDBProject/login.jsp';</script><%
 			session.setAttribute("isLogin","false");
 			request.setAttribute("isLogin", "false");
 		}
-		response.sendRedirect("main.jsp");
 	} catch(Exception e){
 		out.print(e.toString());
 	}

@@ -5,26 +5,29 @@ import javax.crypto.spec.SecretKeySpec;
 public class PwdEncryption{
     private static String key;
 
+    // 생성자 키 설정
     public PwdEncryption(){
         key = "I Love DB Dr.Lim";
     }
     
+    // 암호화 메소드
     public String encrypt(String message) throws Exception{
 
         if(message == null){
-        return null;
-    }else{
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
-
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-
-        byte[] encrypted = cipher.doFinal(message.getBytes());
-
-        return byteArrayToHex(encrypted);
+        	return null;
+	    }else{
+	        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
+	
+	        Cipher cipher = Cipher.getInstance("AES");
+	        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+	
+	        byte[] encrypted = cipher.doFinal(message.getBytes());
+	
+	        return byteArrayToHex(encrypted);
+	    }
     }
-}
 
+    // 암호화에 필요한 바이트->16진수 변환 메소드
     private static String byteArrayToHex(byte[] encrypted) {
 
         if(encrypted == null || encrypted.length ==0){
@@ -42,6 +45,7 @@ public class PwdEncryption{
         return sb.toString();
     }
 
+    // 복호화 메소드
     public String decrypt(String encrypted) throws Exception{
 
         if(encrypted == null){
@@ -60,6 +64,7 @@ public class PwdEncryption{
         }
     }
 
+    // 복호화에 필요한 16진수->바이트배열로 변환하는 메소드
     private static byte[] hexToByteArray(String hex) {
 
         if(hex == null || hex.length() == 0){
