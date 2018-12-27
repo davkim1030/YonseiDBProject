@@ -243,11 +243,14 @@
 					+ rs.getObject(rs.getMetaData().getColumnName(i + 1).toString()).toString()
 					+ "</td>");
 		// FK 애트리뷰트에 링크 적용
-		out.print("<td><a href=\"detail.jsp?type=용사" + "&id="
+		if(rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())!=null)
+			out.print("<td><a href=\"detail.jsp?type=용사" + "&id="
 				+ rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())
 				+ "\">"
 				+ rs.getObject(rs.getMetaData().getColumnName(rs.getMetaData().getColumnCount()).toString())
 				+ "</a></td>");
+		else
+			out.print("<td></td>");
 		out.print("</tr></table>");
 
 	} else if(request.getParameter("type").equals("마물장군")) { // 마물장군
